@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MariaDB Database Learning Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .exam-alert {
+            background: #ff6b6b;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        nav {
+            background: #f8f9fa;
+            padding: 15px;
+            border-bottom: 2px solid #e9ecef;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            overflow-x: auto;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #667eea;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        nav a:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        section {
+            margin-bottom: 40px;
+            scroll-margin-top: 80px;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin: 20px 0 10px 0;
+        }
+
+        .code-block {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .code-block code {
+            color: #61dafb;
+        }
+
+        .important {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .note {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .tip {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .warning {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .mistake {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            header p {
+                font-size: 0.95em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            h3 {
+                font-size: 1.2em;
+            }
+
+            nav ul {
+                justify-content: flex-start;
+            }
+
+            .code-block {
+                font-size: 0.85em;
+                padding: 15px;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #667eea;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.5em;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+        }
+
+        .back-to-top:hover {
+            background: #764ba2;
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 MariaDB Database Learning Guide</h1>
+            <p>Complete Reference for Database Operations & SQL</p>
+        </header>
+
+        <div class="exam-alert">
+            🎯 Quick Reference Guide for Your Exam - Good Luck!
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="#database">Database</a></li>
+                <li><a href="#tables">Tables</a></li>
+                <li><a href="#data">Data Operations</a></li>
+                <li><a href="#constraints">Constraints</a></li>
+                <li><a href="#joins">Joins</a></li>
+                <li><a href="#datetime">Date/Time</a></li>
+                <li><a href="#mistakes">Common Mistakes</a></li>
+                <li><a href="#summary">Summary</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <section id="database">
+                <h2>1. Database Operations</h2>
+                
+                <h3>Creating a Database</h3>
+                <div class="code-block">
+CREATE DATABASE Build_And_Ship;
+                </div>
+
+                <h3>Using a Database</h3>
+                <div class="code-block">
+USE Build_And_Ship;
+                </div>
+
+                <div class="important">
+                    <strong>⚠️ Important:</strong> Use <code>USE database_name</code> (not <code>USE database database_name</code>)
+                </div>
+            </section>
+
+            <section id="tables">
+                <h2>2. Table Creation & Structure</h2>
+                
+                <h3>Basic Table Creation</h3>
+                <div class="code-block">
+CREATE TABLE Members (
+    Name VARCHAR(100),
+    Post VARCHAR(200),
+    Member_ID INT
+);
+                </div>
+
+                <div class="note">
+                    <strong>📝 Key Points:</strong>
+                    <ul>
+                        <li>Table must have at least one column</li>
+                        <li>Each column needs a data type</li>
+                        <li>No trailing comma after last column</li>
+                    </ul>
+                </div>
+
+                <h3>View Table Structure</h3>
+                <div class="code-block">
+DESC Members;
+                </div>
+
+                <h3>View Table Data</h3>
+                <div class="code-block">
+SELECT * FROM Members;
+                </div>
+
+                <div class="warning">
+                    <strong>⚠️ Important:</strong> Table names are case-sensitive in MariaDB
+                </div>
+
+                <h3>Modifying Table Structure (ALTER TABLE)</h3>
+                
+                <h4>Reordering Columns</h4>
+                <div class="code-block">
+ALTER TABLE Members 
+MODIFY COLUMN Member_ID INT FIRST;
+                </div>
+
+                <h4>Renaming Columns</h4>
+                <div class="code-block">
+ALTER TABLE Members 
+CHANGE Post Position VARCHAR(200);
+                </div>
+
+                <h4>Adding Columns</h4>
+                <div class="code-block">
+-- Add column at the end
+ALTER TABLE Members 
+ADD COLUMN Donation INT;
+
+-- Add column after specific column
+ALTER TABLE Members 
+ADD COLUMN Monthly_Donation INT AFTER Position;
+                </div>
+            </section>
+
+            <section id="data">
+                <h2>3. Data Operations</h2>
+                
+                <h3>Inserting Data</h3>
+                
+                <h4>Insert Multiple Rows</h4>
+                <div class="code-block">
+INSERT INTO Members
+VALUES
+(1, "Aadim Dhakal", "Main Lead"),
+(2, "Samriddha Pant", "Vice Lead"),
+(3, "Chandan Shah", "Tech Lead"),
+(4, "Abhas Shakya", "Member");
+                </div>
+
+                <h4>Insert Specific Columns</h4>
+                <div class="code-block">
+INSERT INTO Customers(Customer_Name)
+VALUES
+("Aadim"),
+("Palpasa"),
+("Shine");
+                </div>
+
+                <h3>Updating Data</h3>
+                
+                <h4>Update Single Row</h4>
+                <div class="code-block">
+UPDATE Members
+SET Donation = 500
+WHERE Member_ID = 1;
+                </div>
+
+                <h4>Update All Rows</h4>
+                <div class="code-block">
+UPDATE Members
+SET Monthly_Donation = 500;
+                </div>
+
+                <div class="important">
+                    <strong>⚠️ Important:</strong> Don't use <code>UPDATE table table_name</code> - just <code>UPDATE table_name</code>
+                </div>
+
+                <h3>Working with NULL Values</h3>
+                
+                <div class="warning">
+                    <strong>❌ Incorrect Way:</strong>
+                    <div class="code-block">
+SELECT * FROM Members 
+WHERE Total_Donation = NULL;  -- Returns empty set
+                    </div>
+                </div>
+
+                <div class="tip">
+                    <strong>✅ Correct Way:</strong>
+                    <div class="code-block">
+SELECT * FROM Members 
+WHERE Total_Donation IS NULL;
+                    </div>
+                </div>
+            </section>
+
+            <section id="datetime">
+                <h2>4. Date and Time Functions</h2>
+                
+                <h3>Date/Time Data Types</h3>
+                <div class="code-block">
+CREATE TABLE test (
+    my_date DATE,
+    my_time TIME,
+    my_datetime DATETIME
+);
+                </div>
+
+                <h3>Built-in Functions</h3>
+                <div class="code-block">
+INSERT INTO test
+VALUES
+(CURRENT_DATE(), CURRENT_TIME(), NOW());
+                </div>
+
+                <div class="note">
+                    <strong>📝 Result Example:</strong>
+                    <ul>
+                        <li>Date: 2026-01-02</li>
+                        <li>Time: 07:12:12</li>
+                        <li>DateTime: 2026-01-02 07:12:12</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="constraints">
+                <h2>5. Constraints</h2>
+                
+                <h3>UNIQUE Constraint</h3>
+                <div class="code-block">
+ALTER TABLE Members
+ADD CONSTRAINT UNIQUE(Member_ID);
+                </div>
+
+                <h3>PRIMARY KEY Constraint</h3>
+                <div class="code-block">
+-- Method 1: During table creation
+CREATE TABLE Theatre (
+    Movie_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Movie_Name VARCHAR(100)
+);
+
+-- Method 2: After table creation
+ALTER TABLE Members
+ADD CONSTRAINT PRIMARY KEY(Member_ID);
+                </div>
+
+                <h3>NOT NULL Constraint</h3>
+                <div class="code-block">
+ALTER TABLE Members
+MODIFY Name VARCHAR(100) NOT NULL;
+                </div>
+
+                <h3>CHECK Constraint</h3>
+                <div class="code-block">
+ALTER TABLE Members
+ADD CONSTRAINT chk_donation
+CHECK(Monthly_Donation > 50);
+                </div>
+
+                <h3>DEFAULT Constraint</h3>
+                <div class="code-block">
+ALTER TABLE Members
+ALTER Total_Donation SET DEFAULT 0;
+                </div>
+
+                <h3>FOREIGN KEY Constraint</h3>
+                <div class="code-block">
+ALTER TABLE transactions
+ADD CONSTRAINT transaction_fk
+FOREIGN KEY(Member_ID)
+REFERENCES Members(Member_ID);
+                </div>
+
+                <div class="important">
+                    <strong>⚠️ Important Notes:</strong>
+                    <ul>
+                        <li>AUTO_INCREMENT requires the column to be a PRIMARY KEY or UNIQUE</li>
+                        <li>Foreign key must reference a PRIMARY KEY or UNIQUE column in parent table</li>
+                    </ul>
+                </div>
+
+                <h3>AUTO_INCREMENT</h3>
+                <div class="code-block">
+-- First make it a primary key
+ALTER TABLE Customers
+ADD CONSTRAINT PRIMARY KEY(Customer_ID);
+
+-- Then add auto_increment
+ALTER TABLE Customers
+MODIFY Customer_ID INT AUTO_INCREMENT;
+                </div>
+
+                <div class="tip">
+                    <strong>✅ Benefit:</strong> No need to specify ID when inserting - it auto-generates
+                </div>
+            </section>
+
+            <section id="joins">
+                <h2>6. Table Joins</h2>
+                
+                <h3>INNER JOIN</h3>
+                <div class="code-block">
+SELECT * FROM transactions
+INNER JOIN Members
+ON transactions.Member_ID = Members.Member_ID;
+                </div>
+
+                <div class="note">
+                    <strong>📝 What it does:</strong> Returns only matching records from both tables
+                </div>
+
+                <h3>LEFT JOIN (LEFT OUTER JOIN)</h3>
+                <div class="code-block">
+SELECT * FROM Members
+LEFT JOIN transactions
+ON Members.Member_ID = transactions.Member_ID;
+                </div>
+
+                <div class="note">
+                    <strong>📝 What it does:</strong> Returns all records from the left table (Members), and matching records from the right table. If no match, NULL values are shown for right table columns.
+                </div>
+
+                <h3>RIGHT JOIN (RIGHT OUTER JOIN)</h3>
+                <div class="code-block">
+SELECT * FROM transactions
+RIGHT JOIN Members
+ON transactions.Member_ID = Members.Member_ID;
+                </div>
+
+                <div class="note">
+                    <strong>📝 What it does:</strong> Returns all records from the right table (Members), and matching records from the left table. If no match, NULL values are shown for left table columns.
+                </div>
+
+                <h3>Selecting Specific Columns from Join</h3>
+                <div class="code-block">
+SELECT Transaction_ID, Transaction_Amount, Name, Email
+FROM transactions
+INNER JOIN Members
+ON transactions.Member_ID = Members.Member_ID;
+                </div>
+
+                <div class="important">
+                    <strong>⚠️ Important:</strong> Use correct table names in ON clause (e.g., <code>Customers.Customer_ID</code>, not <code>Customer.Customer_ID</code>)
+                </div>
+
+                <h3>JOIN Types Comparison</h3>
+                <table>
+                    <tr>
+                        <th>Join Type</th>
+                        <th>Description</th>
+                        <th>Use Case</th>
+                    </tr>
+                    <tr>
+                        <td><strong>INNER JOIN</strong></td>
+                        <td>Returns only matching records from both tables</td>
+                        <td>When you want only records that exist in both tables</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LEFT JOIN</strong></td>
+                        <td>Returns all from left table + matching from right</td>
+                        <td>When you want all records from first table regardless of match</td>
+                    </tr>
+                    <tr>
+                        <td><strong>RIGHT JOIN</strong></td>
+                        <td>Returns all from right table + matching from left</td>
+                        <td>When you want all records from second table regardless of match</td>
+                    </tr>
+                </table>
+            </section>
+
+            <section id="transactions">
+                <h2>7. Transaction Control</h2>
+                
+                <h3>Disable Auto-commit</h3>
+                <div class="code-block">
+SET AUTOCOMMIT = OFF;
+                </div>
+
+                <h3>Commit Changes</h3>
+                <div class="code-block">
+COMMIT;
+                </div>
+            </section>
+
+            <section id="mistakes">
+                <h2>8. Common Mistakes & Lessons Learned</h2>
+                
+                <table>
+                    <tr>
+                        <th>Category</th>
+                        <th>Incorrect ❌</th>
+                        <th>Correct ✅</th>
+                    </tr>
+                    <tr>
+                        <td>USE Command</td>
+                        <td class="mistake">USE database Build_And_Ship</td>
+                        <td class="correct">USE Build_And_Ship</td>
+                    </tr>
+                    <tr>
+                        <td>Table Names</td>
+                        <td class="mistake">SELECT * FROM members</td>
+                        <td class="correct">SELECT * FROM Members</td>
+                    </tr>
+                    <tr>
+                        <td>UPDATE Syntax</td>
+                        <td class="mistake">UPDATE table Members SET...</td>
+                        <td class="correct">UPDATE Members SET...</td>
+                    </tr>
+                    <tr>
+                        <td>NULL Comparison</td>
+                        <td class="mistake">WHERE column = NULL</td>
+                        <td class="correct">WHERE column IS NULL</td>
+                    </tr>
+                    <tr>
+                        <td>FOREIGN KEY</td>
+                        <td class="mistake">FOREIGN KEY(col) reference table(col)</td>
+                        <td class="correct">FOREIGN KEY(col) references table(col)</td>
+                    </tr>
+                </table>
+
+                <div class="tip">
+                    <strong>🎯 Best Practices:</strong>
+                    <ul>
+                        <li>Use consistent naming conventions (PascalCase or snake_case)</li>
+                        <li>Always specify column data types when creating tables</li>
+                        <li>Use WHERE clause carefully when updating to avoid unintended changes</li>
+                        <li>Set PRIMARY KEY for every table</li>
+                        <li>Use FOREIGN KEY to maintain referential integrity</li>
+                        <li>Add constraints to ensure data quality</li>
+                        <li>Test queries before executing on production data</li>
+                        <li>Use transactions for critical operations</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="summary">
+                <h2>9. Summary of Commands Learned</h2>
+                
+                <table>
+                    <tr>
+                        <th>Category</th>
+                        <th>Commands</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Database</strong></td>
+                        <td>CREATE DATABASE, USE</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Table</strong></td>
+                        <td>CREATE TABLE, DROP TABLE, DESC</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Data</strong></td>
+                        <td>INSERT INTO, UPDATE, SELECT, DELETE</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Structure</strong></td>
+                        <td>ALTER TABLE (ADD, MODIFY, CHANGE)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Constraints</strong></td>
+                        <td>PRIMARY KEY, FOREIGN KEY, UNIQUE, NOT NULL, CHECK, DEFAULT</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Joins</strong></td>
+                        <td>INNER JOIN, LEFT JOIN, RIGHT JOIN</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Functions</strong></td>
+                        <td>CURRENT_DATE(), CURRENT_TIME(), NOW()</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Transaction</strong></td>
+                        <td>SET AUTOCOMMIT, COMMIT</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Features</strong></td>
+                        <td>AUTO_INCREMENT</td>
+                    </tr>
+                </table>
+
+                <div class="tip" style="margin-top: 30px; text-align: center; font-size: 1.2em;">
+                    <strong>🎓 Good Luck on Your Exam!</strong><br>
+                    Remember: Practice makes perfect. Review the common mistakes section before your exam!
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <a href="#" class="back-to-top">↑</a>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Show/hide back to top button
+        const backToTop = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.style.display = 'flex';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
