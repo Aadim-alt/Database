@@ -412,6 +412,23 @@ SET Monthly_Donation = 500;
                     <strong>⚠️ Important:</strong> Don't use <code>UPDATE table table_name</code> - just <code>UPDATE table_name</code>
                 </div>
 
+                <h3>Deleting Data</h3>
+                
+                <h4>Delete Single Row</h4>
+                <div class="code-block">
+DELETE FROM Members
+WHERE Member_ID = 4;
+                </div>
+
+                <h4>Delete All Rows</h4>
+                <div class="code-block">
+DELETE FROM Members;
+                </div>
+
+                <div class="warning">
+                    <strong>⚠️ Warning:</strong> Always use WHERE clause when deleting to avoid removing all data!
+                </div>
+
                 <h3>Working with NULL Values</h3>
                 
                 <div class="warning">
@@ -530,6 +547,31 @@ MODIFY Customer_ID INT AUTO_INCREMENT;
 
                 <div class="tip">
                     <strong>✅ Benefit:</strong> No need to specify ID when inserting - it auto-generates
+                </div>
+
+                <h3>Setting AUTO_INCREMENT Value</h3>
+                
+                <h4>Set Starting Value</h4>
+                <div class="code-block">
+-- Set AUTO_INCREMENT to start from 100
+ALTER TABLE Customers
+AUTO_INCREMENT = 100;
+                </div>
+
+                <h4>Reset AUTO_INCREMENT</h4>
+                <div class="code-block">
+-- Reset to start from 1
+ALTER TABLE Customers
+AUTO_INCREMENT = 1;
+                </div>
+
+                <div class="note">
+                    <strong>📝 When to use:</strong>
+                    <ul>
+                        <li>After deleting rows to reset the counter</li>
+                        <li>To set a specific starting number for IDs</li>
+                        <li>To maintain sequential ID numbering</li>
+                    </ul>
                 </div>
             </section>
 
