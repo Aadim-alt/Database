@@ -60,6 +60,47 @@
             padding: 2rem 1rem;
         }
 
+        .tab-navigation {
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: #e2e8f0;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #4a5568;
+        }
+
+        .tab-btn:hover {
+            background: #cbd5e0;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
         .search-box {
             background: white;
             padding: 1.5rem;
@@ -278,10 +319,13 @@
             display: flex;
             justify-content: space-around;
             text-align: center;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .stat {
             flex: 1;
+            min-width: 100px;
         }
 
         .stat-number {
@@ -300,6 +344,199 @@
             display: none;
         }
 
+        .highlight {
+            background: #fef3c7;
+            padding: 0 0.25rem;
+            border-radius: 3px;
+        }
+
+        /* MCQ Styles */
+        .quiz-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-header h2 {
+            color: #667eea;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .question-card {
+            background: #f7fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #667eea;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .option {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f7fafc;
+        }
+
+        .option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .option.correct {
+            border-color: #48bb78;
+            background: #d1fae5;
+        }
+
+        .option.incorrect {
+            border-color: #f56565;
+            background: #fee2e2;
+        }
+
+        .option.disabled {
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .explanation {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #dbeafe;
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .quiz-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .quiz-btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .quiz-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .quiz-btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .quiz-btn-secondary:hover {
+            background: #cbd5e0;
+        }
+
+        .quiz-results {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            text-align: center;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .result-score {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #667eea;
+            margin: 1rem 0;
+        }
+
+        .result-message {
+            font-size: 1.2rem;
+            color: #4a5568;
+            margin-bottom: 1rem;
+        }
+
+        .result-details {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .result-stat {
+            text-align: center;
+        }
+
+        .result-stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .result-stat-number.correct-stat {
+            color: #48bb78;
+        }
+
+        .result-stat-number.incorrect-stat {
+            color: #f56565;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
@@ -309,20 +546,17 @@
                 font-size: 1.1rem;
             }
 
-            .stats-bar {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
             .code-block {
                 font-size: 0.8rem;
             }
-        }
 
-        .highlight {
-            background: #fef3c7;
-            padding: 0 0.25rem;
-            border-radius: 3px;
+            .quiz-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .question-text {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -341,86 +575,100 @@
     </div>
 
     <div class="container">
-        <div class="search-box">
-            <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search topics... (e.g., 'JOIN', 'PRIMARY KEY', 'UPDATE')">
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+            <button class="tab-btn active" onclick="switchTab('study')">📖 Study Material</button>
+            <button class="tab-btn" onclick="switchTab('quiz')">🎯 Practice Quiz</button>
         </div>
 
-        <div class="stats-bar">
-            <div class="stat">
-                <div class="stat-number" id="completedCount">0</div>
-                <div class="stat-label">Completed</div>
+        <!-- Study Material Tab -->
+        <div id="studyTab" class="tab-content active">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search topics... (e.g., 'JOIN', 'PRIMARY KEY', 'UPDATE')">
             </div>
-            <div class="stat">
-                <div class="stat-number" id="totalCount">9</div>
-                <div class="stat-label">Total Topics</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number" id="percentComplete">0%</div>
-                <div class="stat-label">Progress</div>
-            </div>
-        </div>
 
-        <div id="topicsContainer">
-            <!-- Topic 1: Database Operations -->
-            <div class="topic-card" data-topic="database">
-                <div class="topic-header">
-                    <div class="topic-title">
-                        <span class="topic-icon">🗄️</span>
-                        <span>Database Operations</span>
-                    </div>
-                    <div>
-                        <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
-                        <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
-                    </div>
+            <div class="stats-bar">
+                <div class="stat">
+                    <div class="stat-number" id="completedCount">0</div>
+                    <div class="stat-label">Topics Done</div>
                 </div>
-                <div class="topic-content">
-                    <h3>Creating a Database</h3>
-                    <div class="code-block">CREATE DATABASE Build_And_Ship;</div>
-
-                    <h3>Using a Database</h3>
-                    <div class="code-block">USE Build_And_Ship;</div>
-
-                    <div class="alert alert-warning">
-                        <strong>⚠️ Common Mistake:</strong>
-                        <div class="key-point">Use <span class="correct">USE database_name</span>, NOT <span class="incorrect">USE database database_name</span></div>
-                    </div>
+                <div class="stat">
+                    <div class="stat-number" id="totalCount">9</div>
+                    <div class="stat-label">Total Topics</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="percentComplete">0%</div>
+                    <div class="stat-label">Progress</div>
                 </div>
             </div>
 
-            <!-- Topic 2: Table Operations -->
-            <div class="topic-card" data-topic="tables">
-                <div class="topic-header">
-                    <div class="topic-title">
-                        <span class="topic-icon">📋</span>
-                        <span>Creating & Modifying Tables</span>
+            <div style="display: flex; gap: 1rem; margin-bottom: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button class="quiz-btn quiz-btn-secondary" onclick="expandAll()">📖 Expand All</button>
+                <button class="quiz-btn quiz-btn-secondary" onclick="collapseAll()">📕 Collapse All</button>
+                <button class="quiz-btn quiz-btn-secondary" onclick="resetProgress()">🔄 Reset Progress</button>
+            </div>
+
+            <div id="topicsContainer">
+                <!-- Topic 1: Database Operations -->
+                <div class="topic-card" data-topic="database">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <span class="topic-icon">🗄️</span>
+                            <span>Database Operations</span>
+                        </div>
+                        <div>
+                            <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
+                            <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
+                        </div>
                     </div>
-                    <div>
-                        <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
-                        <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
+                    <div class="topic-content">
+                        <h3>Creating a Database</h3>
+                        <div class="code-block">CREATE DATABASE Build_And_Ship;</div>
+
+                        <h3>Using a Database</h3>
+                        <div class="code-block">USE Build_And_Ship;</div>
+
+                        <div class="alert alert-warning">
+                            <strong>⚠️ Common Mistake:</strong>
+                            <div class="key-point">Use <span class="correct">USE database_name</span>, NOT <span class="incorrect">USE database database_name</span></div>
+                        </div>
                     </div>
                 </div>
-                <div class="topic-content">
-                    <h3>Create Table</h3>
-                    <div class="code-block">CREATE TABLE Members (
+
+                <!-- Topic 2: Table Operations -->
+                <div class="topic-card" data-topic="tables">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <span class="topic-icon">📋</span>
+                            <span>Creating & Modifying Tables</span>
+                        </div>
+                        <div>
+                            <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
+                            <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <h3>Create Table</h3>
+                        <div class="code-block">CREATE TABLE Members (
     Name VARCHAR(100),
     Post VARCHAR(200),
     Member_ID INT
 );</div>
 
-                    <div class="alert alert-info">
-                        <strong>📝 Remember:</strong>
-                        <div class="key-point">Every table needs at least one column</div>
-                        <div class="key-point">Each column must have a data type</div>
-                        <div class="key-point">No comma after the last column</div>
-                        <div class="key-point">Table names are case-sensitive!</div>
-                    </div>
+                        <div class="alert alert-info">
+                            <strong>📝 Remember:</strong>
+                            <div class="key-point">Every table needs at least one column</div>
+                            <div class="key-point">Each column must have a data type</div>
+                            <div class="key-point">No comma after the last column</div>
+                            <div class="key-point">Table names are case-sensitive!</div>
+                        </div>
 
-                    <h3>View Table</h3>
-                    <div class="code-block">DESC Members;  -- Show structure
+                        <h3>View Table</h3>
+                        <div class="code-block">DESC Members;  -- Show structure
 SELECT * FROM Members;  -- Show data</div>
 
-                    <h3>Modify Table Structure</h3>
-                    <div class="code-block">-- Reorder column
+                        <h3>Modify Table Structure</h3>
+                        <div class="code-block">-- Reorder column
 ALTER TABLE Members 
 MODIFY COLUMN Member_ID INT FIRST;
 
@@ -431,24 +679,24 @@ CHANGE Post Position VARCHAR(200);
 -- Add column
 ALTER TABLE Members 
 ADD COLUMN Donation INT AFTER Position;</div>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Topic 3: Data Operations -->
-            <div class="topic-card" data-topic="data-operations">
-                <div class="topic-header">
-                    <div class="topic-title">
-                        <span class="topic-icon">✏️</span>
-                        <span>Insert, Update & Delete Data</span>
+                <!-- Topic 3: Data Operations -->
+                <div class="topic-card" data-topic="data-operations">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <span class="topic-icon">✏️</span>
+                            <span>Insert, Update & Delete Data</span>
+                        </div>
+                        <div>
+                            <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
+                            <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
+                        </div>
                     </div>
-                    <div>
-                        <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
-                        <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
-                    </div>
-                </div>
-                <div class="topic-content">
-                    <h3>Insert Data</h3>
-                    <div class="code-block">-- Insert multiple rows
+                    <div class="topic-content">
+                        <h3>Insert Data</h3>
+                        <div class="code-block">-- Insert multiple rows
 INSERT INTO Members VALUES
 (1, "Aadim", "Lead"),
 (2, "Samriddha", "Vice Lead");
@@ -457,8 +705,8 @@ INSERT INTO Members VALUES
 INSERT INTO Customers(Customer_Name)
 VALUES ("Aadim"), ("Palpasa");</div>
 
-                    <h3>Update Data</h3>
-                    <div class="code-block">-- Update one row
+                        <h3>Update Data</h3>
+                        <div class="code-block">-- Update one row
 UPDATE Members
 SET Donation = 500
 WHERE Member_ID = 1;
@@ -467,55 +715,55 @@ WHERE Member_ID = 1;
 UPDATE Members
 SET Monthly_Donation = 500;</div>
 
-                    <div class="alert alert-warning">
-                        <strong>⚠️ Warning:</strong> Always use WHERE clause to avoid updating ALL rows!
-                    </div>
+                        <div class="alert alert-warning">
+                            <strong>⚠️ Warning:</strong> Always use WHERE clause to avoid updating ALL rows!
+                        </div>
 
-                    <h3>Delete Data</h3>
-                    <div class="code-block">-- Delete specific row
+                        <h3>Delete Data</h3>
+                        <div class="code-block">-- Delete specific row
 DELETE FROM Members
 WHERE Member_ID = 4;
 
 -- Delete all rows
 DELETE FROM Members;</div>
 
-                    <div class="alert alert-danger">
-                        <strong>🚨 Critical:</strong> DELETE without WHERE removes ALL data!
-                    </div>
+                        <div class="alert alert-danger">
+                            <strong>🚨 Critical:</strong> DELETE without WHERE removes ALL data!
+                        </div>
 
-                    <h3>Working with NULL</h3>
-                    <table class="comparison-table">
-                        <tr>
-                            <th>Incorrect ❌</th>
-                            <th>Correct ✅</th>
-                        </tr>
-                        <tr>
-                            <td class="incorrect">WHERE column = NULL</td>
-                            <td class="correct">WHERE column IS NULL</td>
-                        </tr>
-                        <tr>
-                            <td class="incorrect">WHERE column != NULL</td>
-                            <td class="correct">WHERE column IS NOT NULL</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Topic 4: Constraints -->
-            <div class="topic-card" data-topic="constraints">
-                <div class="topic-header">
-                    <div class="topic-title">
-                        <span class="topic-icon">🔒</span>
-                        <span>Constraints & Data Integrity</span>
-                    </div>
-                    <div>
-                        <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
-                        <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
+                        <h3>Working with NULL</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Incorrect ❌</th>
+                                <th>Correct ✅</th>
+                            </tr>
+                            <tr>
+                                <td class="incorrect">WHERE column = NULL</td>
+                                <td class="correct">WHERE column IS NULL</td>
+                            </tr>
+                            <tr>
+                                <td class="incorrect">WHERE column != NULL</td>
+                                <td class="correct">WHERE column IS NOT NULL</td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
-                <div class="topic-content">
-                    <h3>PRIMARY KEY</h3>
-                    <div class="code-block">-- During creation
+
+                <!-- Topic 4: Constraints -->
+                <div class="topic-card" data-topic="constraints">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <span class="topic-icon">🔒</span>
+                            <span>Constraints & Data Integrity</span>
+                        </div>
+                        <div>
+                            <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
+                            <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <h3>PRIMARY KEY</h3>
+                        <div class="code-block">-- During creation
 CREATE TABLE Theatre (
     Movie_ID INT PRIMARY KEY AUTO_INCREMENT,
     Movie_Name VARCHAR(100)
@@ -525,18 +773,18 @@ CREATE TABLE Theatre (
 ALTER TABLE Members
 ADD CONSTRAINT PRIMARY KEY(Member_ID);</div>
 
-                    <h3>FOREIGN KEY</h3>
-                    <div class="code-block">ALTER TABLE transactions
+                        <h3>FOREIGN KEY</h3>
+                        <div class="code-block">ALTER TABLE transactions
 ADD CONSTRAINT fk_member
 FOREIGN KEY(Member_ID)
 REFERENCES Members(Member_ID);</div>
 
-                    <div class="alert alert-warning">
-                        <strong>Remember:</strong> Use <span class="highlight">REFERENCES</span> (with 'S'), not 'reference'
-                    </div>
+                        <div class="alert alert-warning">
+                            <strong>Remember:</strong> Use <span class="highlight">REFERENCES</span> (with 'S'), not 'reference'
+                        </div>
 
-                    <h3>Other Constraints</h3>
-                    <div class="code-block">-- UNIQUE
+                        <h3>Other Constraints</h3>
+                        <div class="code-block">-- UNIQUE
 ALTER TABLE Members
 ADD CONSTRAINT UNIQUE(Member_ID);
 
@@ -553,8 +801,8 @@ CHECK(Monthly_Donation > 50);
 ALTER TABLE Members
 ALTER Total_Donation SET DEFAULT 0;</div>
 
-                    <h3>AUTO_INCREMENT</h3>
-                    <div class="code-block">-- Must be PRIMARY KEY or UNIQUE first
+                        <h3>AUTO_INCREMENT</h3>
+                        <div class="code-block">-- Must be PRIMARY KEY or UNIQUE first
 ALTER TABLE Customers
 ADD CONSTRAINT PRIMARY KEY(Customer_ID);
 
@@ -570,114 +818,114 @@ AUTO_INCREMENT = 100;
 ALTER TABLE Customers
 AUTO_INCREMENT = 1;</div>
 
-                    <div class="alert alert-success">
-                        <strong>💡 Benefit:</strong> No need to specify ID when inserting - it auto-generates!
+                        <div class="alert alert-success">
+                            <strong>💡 Benefit:</strong> No need to specify ID when inserting - it auto-generates!
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Topic 5: Joins -->
-            <div class="topic-card" data-topic="joins">
-                <div class="topic-header">
-                    <div class="topic-title">
-                        <span class="topic-icon">🔗</span>
-                        <span>Table Joins</span>
+                <!-- Topic 5: Joins -->
+                <div class="topic-card" data-topic="joins">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <span class="topic-icon">🔗</span>
+                            <span>Table Joins</span>
+                        </div>
+                        <div>
+                            <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
+                            <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
+                        </div>
                     </div>
-                    <div>
-                        <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
-                        <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
-                    </div>
-                </div>
-                <div class="topic-content">
-                    <h3>INNER JOIN</h3>
-                    <div class="code-block">SELECT * FROM transactions
+                    <div class="topic-content">
+                        <h3>INNER JOIN</h3>
+                        <div class="code-block">SELECT * FROM transactions
 INNER JOIN Members
 ON transactions.Member_ID = Members.Member_ID;</div>
-                    <div class="alert alert-info">
-                        <strong>📌 Returns:</strong> Only matching records from BOTH tables
-                    </div>
+                        <div class="alert alert-info">
+                            <strong>📌 Returns:</strong> Only matching records from BOTH tables
+                        </div>
 
-                    <h3>LEFT JOIN</h3>
-                    <div class="code-block">SELECT * FROM Members
+                        <h3>LEFT JOIN</h3>
+                        <div class="code-block">SELECT * FROM Members
 LEFT JOIN transactions
 ON Members.Member_ID = transactions.Member_ID;</div>
-                    <div class="alert alert-info">
-                        <strong>📌 Returns:</strong> ALL from left table + matching from right (NULL if no match)
-                    </div>
+                        <div class="alert alert-info">
+                            <strong>📌 Returns:</strong> ALL from left table + matching from right (NULL if no match)
+                        </div>
 
-                    <h3>RIGHT JOIN</h3>
-                    <div class="code-block">SELECT * FROM transactions
+                        <h3>RIGHT JOIN</h3>
+                        <div class="code-block">SELECT * FROM transactions
 RIGHT JOIN Members
 ON transactions.Member_ID = Members.Member_ID;</div>
-                    <div class="alert alert-info">
-                        <strong>📌 Returns:</strong> ALL from right table + matching from left (NULL if no match)
-                    </div>
+                        <div class="alert alert-info">
+                            <strong>📌 Returns:</strong> ALL from right table + matching from left (NULL if no match)
+                        </div>
 
-                    <h3>Quick Comparison</h3>
-                    <table class="comparison-table">
-                        <tr>
-                            <th>Join Type</th>
-                            <th>When to Use</th>
-                        </tr>
-                        <tr>
-                            <td><strong>INNER JOIN</strong></td>
-                            <td>Only want records that exist in both tables</td>
-                        </tr>
-                        <tr>
-                            <td><strong>LEFT JOIN</strong></td>
-                            <td>Want all from first table, even if no match</td>
-                        </tr>
-                        <tr>
-                            <td><strong>RIGHT JOIN</strong></td>
-                            <td>Want all from second table, even if no match</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Topic 6: Date/Time -->
-            <div class="topic-card" data-topic="datetime">
-                <div class="topic-header">
-                    <div class="topic-title">
-                        <span class="topic-icon">📅</span>
-                        <span>Date & Time Functions</span>
-                    </div>
-                    <div>
-                        <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
-                        <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
+                        <h3>Quick Comparison</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Join Type</th>
+                                <th>When to Use</th>
+                            </tr>
+                            <tr>
+                                <td><strong>INNER JOIN</strong></td>
+                                <td>Only want records that exist in both tables</td>
+                            </tr>
+                            <tr>
+                                <td><strong>LEFT JOIN</strong></td>
+                                <td>Want all from first table, even if no match</td>
+                            </tr>
+                            <tr>
+                                <td><strong>RIGHT JOIN</strong></td>
+                                <td>Want all from second table, even if no match</td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
-                <div class="topic-content">
-                    <h3>Data Types</h3>
-                    <div class="code-block">CREATE TABLE test (
+
+                <!-- Topic 6: Date/Time -->
+                <div class="topic-card" data-topic="datetime">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <span class="topic-icon">📅</span>
+                            <span>Date & Time Functions</span>
+                        </div>
+                        <div>
+                            <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
+                            <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <h3>Data Types</h3>
+                        <div class="code-block">CREATE TABLE test (
     my_date DATE,           -- YYYY-MM-DD
     my_time TIME,           -- HH:MM:SS
     my_datetime DATETIME    -- YYYY-MM-DD HH:MM:SS
 );</div>
 
-                    <h3>Built-in Functions</h3>
-                    <div class="code-block">INSERT INTO test VALUES
+                        <h3>Built-in Functions</h3>
+                        <div class="code-block">INSERT INTO test VALUES
 (CURRENT_DATE(), CURRENT_TIME(), NOW());
 
 -- Example output:
 -- 2026-01-02 | 07:12:12 | 2026-01-02 07:12:12</div>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Topic 7: Transactions -->
-            <div class="topic-card" data-topic="transactions">
-                <div class="topic-header">
-                    <div class="topic-title">
-                        <span class="topic-icon">💾</span>
-                        <span>Transaction Control</span>
+                <!-- Topic 7: Transactions -->
+                <div class="topic-card" data-topic="transactions">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <span class="topic-icon">💾</span>
+                            <span>Transaction Control</span>
+                        </div>
+                        <div>
+                            <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
+                            <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
+                        </div>
                     </div>
-                    <div>
-                        <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
-                        <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
-                    </div>
-                </div>
-                <div class="topic-content">
-                    <div class="code-block">-- Disable auto-commit
+                    <div class="topic-content">
+                        <div class="code-block">-- Disable auto-commit
 SET AUTOCOMMIT = OFF;
 
 -- Make your changes...
@@ -688,115 +936,433 @@ COMMIT;
 -- Or undo changes
 ROLLBACK;</div>
 
-                    <div class="alert alert-success">
-                        <strong>💡 Use Case:</strong> Protect critical operations from mistakes
+                        <div class="alert alert-success">
+                            <strong>💡 Use Case:</strong> Protect critical operations from mistakes
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 8: Common Mistakes -->
+                <div class="topic-card" data-topic="mistakes">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <span class="topic-icon">⚠️</span>
+                            <span>Common Mistakes to Avoid</span>
+                        </div>
+                        <div>
+                            <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
+                            <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Mistake ❌</th>
+                                <th>Correct ✅</th>
+                            </tr>
+                            <tr>
+                                <td class="incorrect">USE database Build_And_Ship</td>
+                                <td class="correct">USE Build_And_Ship</td>
+                            </tr>
+                            <tr>
+                                <td class="incorrect">UPDATE table Members SET...</td>
+                                <td class="correct">UPDATE Members SET...</td>
+                            </tr>
+                            <tr>
+                                <td class="incorrect">WHERE column = NULL</td>
+                                <td class="correct">WHERE column IS NULL</td>
+                            </tr>
+                            <tr>
+                                <td class="incorrect">FOREIGN KEY(col) reference...</td>
+                                <td class="correct">FOREIGN KEY(col) REFERENCES...</td>
+                            </tr>
+                            <tr>
+                                <td class="incorrect">SELECT * FROM members</td>
+                                <td class="correct">SELECT * FROM Members</td>
+                            </tr>
+                        </table>
+
+                        <div class="alert alert-success">
+                            <strong>🎯 Best Practices:</strong>
+                            <div class="key-point">Always use WHERE with UPDATE/DELETE</div>
+                            <div class="key-point">Set PRIMARY KEY for every table</div>
+                            <div class="key-point">Use FOREIGN KEY for referential integrity</div>
+                            <div class="key-point">Test queries before running on real data</div>
+                            <div class="key-point">Match table name capitalization exactly</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 9: Quick Reference -->
+                <div class="topic-card" data-topic="reference">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <span class="topic-icon">📖</span>
+                            <span>Quick Reference Cheat Sheet</span>
+                        </div>
+                        <div>
+                            <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
+                            <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
+                        </div>
+                    </div>
+                    <div class="topic-content">
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Category</th>
+                                <th>Key Commands</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Database</strong></td>
+                                <td>CREATE DATABASE, USE</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tables</strong></td>
+                                <td>CREATE TABLE, ALTER TABLE, DESC</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Data</strong></td>
+                                <td>INSERT, UPDATE, DELETE, SELECT</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Constraints</strong></td>
+                                <td>PRIMARY KEY, FOREIGN KEY, UNIQUE, NOT NULL, CHECK, DEFAULT</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Joins</strong></td>
+                                <td>INNER JOIN, LEFT JOIN, RIGHT JOIN</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Functions</strong></td>
+                                <td>CURRENT_DATE(), CURRENT_TIME(), NOW()</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Transaction</strong></td>
+                                <td>SET AUTOCOMMIT, COMMIT, ROLLBACK</td>
+                            </tr>
+                        </table>
+
+                        <div class="alert alert-success" style="text-align: center; font-size: 1.1rem; margin-top: 2rem;">
+                            <strong>🎓 You've Got This!</strong><br>
+                            Review your completed topics and practice the examples. Good luck on your exam! 🌟
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Topic 8: Common Mistakes -->
-            <div class="topic-card" data-topic="mistakes">
-                <div class="topic-header">
-                    <div class="topic-title">
-                        <span class="topic-icon">⚠️</span>
-                        <span>Common Mistakes to Avoid</span>
+        <!-- Quiz Tab -->
+        <div id="quizTab" class="tab-content">
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <h2>🎯 MariaDB Practice Quiz</h2>
+                    <p>Test your knowledge with these important questions!</p>
+                </div>
+
+                <div id="quizQuestions">
+                    <!-- Question 1 -->
+                    <div class="question-card">
+                        <div class="question-number">Question 1</div>
+                        <div class="question-text">What is the correct syntax to use a database in MariaDB?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q1" value="a">
+                                <span>USE database database_name;</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1" value="b">
+                                <span>USE database_name;</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1" value="c">
+                                <span>SELECT database_name;</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1" value="d">
+                                <span>CONNECT database_name;</span>
+                            </label>
+                        </div>
+                        <div class="explanation">
+                            <strong>✅ Correct Answer: B</strong><br>
+                            The correct syntax is <code>USE database_name;</code> without the word "database" before the name.
+                        </div>
                     </div>
-                    <div>
-                        <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
-                        <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
+
+                    <!-- Question 2 -->
+                    <div class="question-card">
+                        <div class="question-number">Question 2</div>
+                        <div class="question-text">How do you check for NULL values in a WHERE clause?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q2" value="a">
+                                <span>WHERE column = NULL</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2" value="b">
+                                <span>WHERE column == NULL</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2" value="c">
+                                <span>WHERE column IS NULL</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2" value="d">
+                                <span>WHERE column EQUALS NULL</span>
+                            </label>
+                        </div>
+                        <div class="explanation">
+                            <strong>✅ Correct Answer: C</strong><br>
+                            You must use <code>IS NULL</code> to check for NULL values. The equality operator (=) doesn't work with NULL.
+                        </div>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="question-card">
+                        <div class="question-number">Question 3</div>
+                        <div class="question-text">Which keyword is used in FOREIGN KEY constraint?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q3" value="a">
+                                <span>REFERENCE</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3" value="b">
+                                <span>REFERENCES</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3" value="c">
+                                <span>REFER</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3" value="d">
+                                <span>LINKS</span>
+                            </label>
+                        </div>
+                        <div class="explanation">
+                            <strong>✅ Correct Answer: B</strong><br>
+                            The correct keyword is <code>REFERENCES</code> (with an 'S' at the end), not "reference".
+                        </div>
+                    </div>
+
+                    <!-- Question 4 -->
+                    <div class="question-card">
+                        <div class="question-number">Question 4</div>
+                        <div class="question-text">What does INNER JOIN return?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q4" value="a">
+                                <span>All records from both tables</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4" value="b">
+                                <span>Only matching records from both tables</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4" value="c">
+                                <span>All records from left table only</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4" value="d">
+                                <span>All records from right table only</span>
+                            </label>
+                        </div>
+                        <div class="explanation">
+                            <strong>✅ Correct Answer: B</strong><br>
+                            INNER JOIN returns only the records that have matching values in both tables.
+                        </div>
+                    </div>
+
+                    <!-- Question 5 -->
+                    <div class="question-card">
+                        <div class="question-number">Question 5</div>
+                        <div class="question-text">Before using AUTO_INCREMENT, what must the column be?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q5" value="a">
+                                <span>VARCHAR type</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5" value="b">
+                                <span>PRIMARY KEY or UNIQUE</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5" value="c">
+                                <span>FOREIGN KEY</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5" value="d">
+                                <span>NOT NULL only</span>
+                            </label>
+                        </div>
+                        <div class="explanation">
+                            <strong>✅ Correct Answer: B</strong><br>
+                            AUTO_INCREMENT requires the column to be either a PRIMARY KEY or have a UNIQUE constraint.
+                        </div>
+                    </div>
+
+                    <!-- Question 6 -->
+                    <div class="question-card">
+                        <div class="question-number">Question 6</div>
+                        <div class="question-text">What happens if you use DELETE FROM table_name without a WHERE clause?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q6" value="a">
+                                <span>Deletes only the first row</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q6" value="b">
+                                <span>Causes an error</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q6" value="c">
+                                <span>Deletes all rows in the table</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q6" value="d">
+                                <span>Deletes the table structure</span>
+                            </label>
+                        </div>
+                        <div class="explanation">
+                            <strong>✅ Correct Answer: C</strong><br>
+                            DELETE without WHERE clause removes ALL rows from the table. Always use WHERE clause to be safe!
+                        </div>
+                    </div>
+
+                    <!-- Question 7 -->
+                    <div class="question-card">
+                        <div class="question-number">Question 7</div>
+                        <div class="question-text">Which ALTER TABLE command is used to rename a column?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q7" value="a">
+                                <span>MODIFY COLUMN</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7" value="b">
+                                <span>CHANGE</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7" value="c">
+                                <span>RENAME</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7" value="d">
+                                <span>UPDATE COLUMN</span>
+                            </label>
+                        </div>
+                        <div class="explanation">
+                            <strong>✅ Correct Answer: B</strong><br>
+                            Use <code>ALTER TABLE table_name CHANGE old_name new_name datatype;</code> to rename a column.
+                        </div>
+                    </div>
+
+                    <!-- Question 8 -->
+                    <div class="question-card">
+                        <div class="question-number">Question 8</div>
+                        <div class="question-text">Which function returns the current date and time together?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q8" value="a">
+                                <span>CURRENT_DATE()</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8" value="b">
+                                <span>CURRENT_TIME()</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8" value="c">
+                                <span>NOW()</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8" value="d">
+                                <span>DATETIME()</span>
+                            </label>
+                        </div>
+                        <div class="explanation">
+                            <strong>✅ Correct Answer: C</strong><br>
+                            <code>NOW()</code> returns the current date and time in DATETIME format (YYYY-MM-DD HH:MM:SS).
+                        </div>
+                    </div>
+
+                    <!-- Question 9 -->
+                    <div class="question-card">
+                        <div class="question-number">Question 9</div>
+                        <div class="question-text">What is the correct syntax to update a specific row?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q9" value="a">
+                                <span>UPDATE table Members SET column = value;</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9" value="b">
+                                <span>UPDATE Members SET column = value WHERE id = 1;</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9" value="c">
+                                <span>MODIFY Members SET column = value WHERE id = 1;</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9" value="d">
+                                <span>CHANGE Members column = value WHERE id = 1;</span>
+                            </label>
+                        </div>
+                        <div class="explanation">
+                            <strong>✅ Correct Answer: B</strong><br>
+                            Correct syntax: <code>UPDATE table_name SET column = value WHERE condition;</code> Don't use "table" before the table name.
+                        </div>
+                    </div>
+
+                    <!-- Question 10 -->
+                    <div class="question-card">
+                        <div class="question-number">Question 10</div>
+                        <div class="question-text">Are table names case-sensitive in MariaDB?</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q10" value="a">
+                                <span>No, they are never case-sensitive</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10" value="b">
+                                <span>Yes, table names are case-sensitive</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10" value="c">
+                                <span>Only on Windows systems</span>
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10" value="d">
+                                <span>Only column names are case-sensitive</span>
+                            </label>
+                        </div>
+                        <div class="explanation">
+                            <strong>✅ Correct Answer: B</strong><br>
+                            Table names ARE case-sensitive in MariaDB. "Members" and "members" are different tables!
+                        </div>
                     </div>
                 </div>
-                <div class="topic-content">
-                    <table class="comparison-table">
-                        <tr>
-                            <th>Mistake ❌</th>
-                            <th>Correct ✅</th>
-                        </tr>
-                        <tr>
-                            <td class="incorrect">USE database Build_And_Ship</td>
-                            <td class="correct">USE Build_And_Ship</td>
-                        </tr>
-                        <tr>
-                            <td class="incorrect">UPDATE table Members SET...</td>
-                            <td class="correct">UPDATE Members SET...</td>
-                        </tr>
-                        <tr>
-                            <td class="incorrect">WHERE column = NULL</td>
-                            <td class="correct">WHERE column IS NULL</td>
-                        </tr>
-                        <tr>
-                            <td class="incorrect">FOREIGN KEY(col) reference...</td>
-                            <td class="correct">FOREIGN KEY(col) REFERENCES...</td>
-                        </tr>
-                        <tr>
-                            <td class="incorrect">SELECT * FROM members</td>
-                            <td class="correct">SELECT * FROM Members</td>
-                        </tr>
-                    </table>
 
-                    <div class="alert alert-success">
-                        <strong>🎯 Best Practices:</strong>
-                        <div class="key-point">Always use WHERE with UPDATE/DELETE</div>
-                        <div class="key-point">Set PRIMARY KEY for every table</div>
-                        <div class="key-point">Use FOREIGN KEY for referential integrity</div>
-                        <div class="key-point">Test queries before running on real data</div>
-                        <div class="key-point">Match table name capitalization exactly</div>
-                    </div>
+                <div class="quiz-actions">
+                    <button class="quiz-btn quiz-btn-primary" onclick="submitQuiz()">Submit Quiz</button>
+                    <button class="quiz-btn quiz-btn-secondary" onclick="resetQuiz()">Reset Quiz</button>
                 </div>
             </div>
 
-            <!-- Topic 9: Quick Reference -->
-            <div class="topic-card" data-topic="reference">
-                <div class="topic-header">
-                    <div class="topic-title">
-                        <span class="topic-icon">📖</span>
-                        <span>Quick Reference Cheat Sheet</span>
+            <div class="quiz-results" id="quizResults">
+                <h2>🎉 Quiz Complete!</h2>
+                <div class="result-score" id="resultScore">0/10</div>
+                <div class="result-message" id="resultMessage"></div>
+                <div class="result-details">
+                    <div class="result-stat">
+                        <div class="result-stat-number correct-stat" id="correctAnswers">0</div>
+                        <div class="stat-label">Correct</div>
                     </div>
-                    <div>
-                        <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
-                        <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
+                    <div class="result-stat">
+                        <div class="result-stat-number incorrect-stat" id="incorrectAnswers">0</div>
+                        <div class="stat-label">Incorrect</div>
                     </div>
                 </div>
-                <div class="topic-content">
-                    <table class="comparison-table">
-                        <tr>
-                            <th>Category</th>
-                            <th>Key Commands</th>
-                        </tr>
-                        <tr>
-                            <td><strong>Database</strong></td>
-                            <td>CREATE DATABASE, USE</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Tables</strong></td>
-                            <td>CREATE TABLE, ALTER TABLE, DESC</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Data</strong></td>
-                            <td>INSERT, UPDATE, DELETE, SELECT</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Constraints</strong></td>
-                            <td>PRIMARY KEY, FOREIGN KEY, UNIQUE, NOT NULL, CHECK, DEFAULT</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Joins</strong></td>
-                            <td>INNER JOIN, LEFT JOIN, RIGHT JOIN</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Functions</strong></td>
-                            <td>CURRENT_DATE(), CURRENT_TIME(), NOW()</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Transaction</strong></td>
-                            <td>SET AUTOCOMMIT, COMMIT, ROLLBACK</td>
-                        </tr>
-                    </table>
-
-                    <div class="alert alert-success" style="text-align: center; font-size: 1.1rem; margin-top: 2rem;">
-                        <strong>🎓 You've Got This!</strong><br>
-                        Review your completed topics and practice the examples. Good luck on your exam! 🌟
-                    </div>
+                <div class="quiz-actions">
+                    <button class="quiz-btn quiz-btn-primary" onclick="retryQuiz()">Try Again</button>
+                    <button class="quiz-btn quiz-btn-secondary" onclick="switchTab('study')">Back to Study</button>
                 </div>
             </div>
         </div>
@@ -807,6 +1373,12 @@ ROLLBACK;</div>
         let completedTopics = new Set();
         const totalTopics = document.querySelectorAll('.topic-card').length;
 
+        // Quiz answers (correct answers)
+        const quizAnswers = {
+            q1: 'b', q2: 'c', q3: 'b', q4: 'b', q5: 'b',
+            q6: 'c', q7: 'b', q8: 'c', q9: 'b', q10: 'b'
+        };
+
         function updateProgress() {
             const completed = completedTopics.size;
             const percent = Math.round((completed / totalTopics) * 100);
@@ -815,7 +1387,6 @@ ROLLBACK;</div>
             document.getElementById('percentComplete').textContent = percent + '%';
             document.getElementById('progressFill').style.width = percent + '%';
             
-            // Save to localStorage
             localStorage.setItem('mariadb_completed', JSON.stringify([...completedTopics]));
         }
 
@@ -844,6 +1415,136 @@ ROLLBACK;</div>
             icon.classList.toggle('open');
         }
 
+        function switchTab(tab) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-btn');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            buttons.forEach(b => b.classList.remove('active'));
+            
+            if (tab === 'study') {
+                document.getElementById('studyTab').classList.add('active');
+                buttons[0].classList.add('active');
+            } else {
+                document.getElementById('quizTab').classList.add('active');
+                buttons[1].classList.add('active');
+            }
+        }
+
+        function submitQuiz() {
+            let correct = 0;
+            let incorrect = 0;
+            
+            for (let i = 1; i <= 10; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                const questionCard = document.querySelectorAll('.question-card')[i-1];
+                const options = questionCard.querySelectorAll('.option');
+                const explanation = questionCard.querySelector('.explanation');
+                
+                if (!selected) {
+                    continue;
+                }
+                
+                options.forEach(opt => opt.classList.add('disabled'));
+                explanation.classList.add('show');
+                
+                const answer = selected.value;
+                const correctAnswer = quizAnswers[`q${i}`];
+                
+                if (answer === correctAnswer) {
+                    correct++;
+                    selected.parentElement.classList.add('correct');
+                } else {
+                    incorrect++;
+                    selected.parentElement.classList.add('incorrect');
+                    const correctOption = questionCard.querySelector(`input[value="${correctAnswer}"]`);
+                    correctOption.parentElement.classList.add('correct');
+                }
+            }
+            
+            const percentage = Math.round((correct / 10) * 100);
+            let message = '';
+            
+            if (percentage >= 90) {
+                message = '🌟 Excellent! You\'re ready for the exam!';
+            } else if (percentage >= 70) {
+                message = '👍 Good job! Review the topics you missed.';
+            } else if (percentage >= 50) {
+                message = '📚 Keep studying! You\'re getting there.';
+            } else {
+                message = '💪 Don\'t give up! Review the material and try again.';
+            }
+            
+            document.getElementById('resultScore').textContent = `${correct}/10`;
+            document.getElementById('resultMessage').textContent = message;
+            document.getElementById('correctAnswers').textContent = correct;
+            document.getElementById('incorrectAnswers').textContent = incorrect;
+            
+            document.querySelector('.quiz-container').style.display = 'none';
+            document.getElementById('quizResults').classList.add('show');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function resetQuiz() {
+            document.querySelectorAll('input[type="radio"]').forEach(input => {
+                input.checked = false;
+            });
+            
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('correct', 'incorrect', 'disabled');
+            });
+            
+            document.querySelectorAll('.explanation').forEach(exp => {
+                exp.classList.remove('show');
+            });
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function retryQuiz() {
+            resetQuiz();
+            document.querySelector('.quiz-container').style.display = 'block';
+            document.getElementById('quizResults').classList.remove('show');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function expandAll() {
+            document.querySelectorAll('.topic-content').forEach(content => {
+                content.classList.add('open');
+            });
+            document.querySelectorAll('.toggle-icon').forEach(icon => {
+                icon.classList.add('open');
+            });
+        }
+
+        function collapseAll() {
+            document.querySelectorAll('.topic-content').forEach(content => {
+                content.classList.remove('open');
+            });
+            document.querySelectorAll('.toggle-icon').forEach(icon => {
+                icon.classList.remove('open');
+            });
+        }
+
+        function resetProgress() {
+            if (confirm('Are you sure you want to reset all progress? This cannot be undone.')) {
+                completedTopics.clear();
+                localStorage.removeItem('mariadb_completed');
+                
+                document.querySelectorAll('.check-btn').forEach(btn => {
+                    btn.classList.remove('checked');
+                    btn.textContent = 'Mark Complete';
+                });
+                
+                document.querySelectorAll('.topic-card').forEach(card => {
+                    card.classList.remove('completed');
+                });
+                
+                updateProgress();
+            }
+        }
+
         // Search functionality
         const searchInput = document.getElementById('searchInput');
         searchInput.addEventListener('input', function(e) {
@@ -854,22 +1555,16 @@ ROLLBACK;</div>
                 const text = card.textContent.toLowerCase();
                 if (text.includes(searchTerm)) {
                     card.classList.remove('hidden');
+                    if (searchTerm.length > 0) {
+                        const content = card.querySelector('.topic-content');
+                        const icon = card.querySelector('.toggle-icon');
+                        content.classList.add('open');
+                        icon.classList.add('open');
+                    }
                 } else {
                     card.classList.add('hidden');
                 }
             });
-        });
-
-        // Smooth scroll progress
-        window.addEventListener('scroll', function() {
-            const scrollTop = window.pageYOffset;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollPercent = (scrollTop / docHeight) * 100;
-            
-            // Only update if not searching
-            if (!searchInput.value) {
-                document.getElementById('progressFill').style.width = scrollPercent + '%';
-            }
         });
 
         // Load saved progress
@@ -892,39 +1587,14 @@ ROLLBACK;</div>
 
         // Keyboard shortcuts
         document.addEventListener('keydown', function(e) {
-            if (e.key === '/' && e.target !== searchInput) {
+            if (e.key === '/' && e.target !== searchInput && e.target.type !== 'radio') {
                 e.preventDefault();
                 searchInput.focus();
             }
-            // Escape to clear search
             if (e.key === 'Escape' && e.target === searchInput) {
                 searchInput.value = '';
                 searchInput.dispatchEvent(new Event('input'));
                 searchInput.blur();
-            }
-        });
-
-        // Expand all / Collapse all functionality
-        document.addEventListener('keydown', function(e) {
-            // Ctrl/Cmd + E to expand all
-            if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
-                e.preventDefault();
-                document.querySelectorAll('.topic-content').forEach(content => {
-                    content.classList.add('open');
-                });
-                document.querySelectorAll('.toggle-icon').forEach(icon => {
-                    icon.classList.add('open');
-                });
-            }
-            // Ctrl/Cmd + C to collapse all
-            if ((e.ctrlKey || e.metaKey) && e.key === 'c') {
-                e.preventDefault();
-                document.querySelectorAll('.topic-content').forEach(content => {
-                    content.classList.remove('open');
-                });
-                document.querySelectorAll('.toggle-icon').forEach(icon => {
-                    icon.classList.remove('open');
-                });
             }
         });
 
@@ -940,115 +1610,6 @@ ROLLBACK;</div>
         // Initialize - collapse all by default
         document.querySelectorAll('.topic-content').forEach(content => {
             content.classList.remove('open');
-        });
-
-        // Add "Expand All" and "Collapse All" buttons
-        const controlsDiv = document.createElement('div');
-        controlsDiv.style.cssText = 'display: flex; gap: 1rem; margin-bottom: 1rem; justify-content: center;';
-        controlsDiv.innerHTML = `
-            <button id="expandAll" style="background: #667eea; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 500;">
-                📖 Expand All
-            </button>
-            <button id="collapseAll" style="background: #764ba2; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 500;">
-                📕 Collapse All
-            </button>
-            <button id="resetProgress" style="background: #f56565; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 500;">
-                🔄 Reset Progress
-            </button>
-        `;
-        
-        const topicsContainer = document.getElementById('topicsContainer');
-        topicsContainer.parentNode.insertBefore(controlsDiv, topicsContainer);
-
-        // Expand all button
-        document.getElementById('expandAll').addEventListener('click', function() {
-            document.querySelectorAll('.topic-content').forEach(content => {
-                content.classList.add('open');
-            });
-            document.querySelectorAll('.toggle-icon').forEach(icon => {
-                icon.classList.add('open');
-            });
-        });
-
-        // Collapse all button
-        document.getElementById('collapseAll').addEventListener('click', function() {
-            document.querySelectorAll('.topic-content').forEach(content => {
-                content.classList.remove('open');
-            });
-            document.querySelectorAll('.toggle-icon').forEach(icon => {
-                icon.classList.remove('open');
-            });
-        });
-
-        // Reset progress button
-        document.getElementById('resetProgress').addEventListener('click', function() {
-            if (confirm('Are you sure you want to reset all progress? This cannot be undone.')) {
-                completedTopics.clear();
-                localStorage.removeItem('mariadb_completed');
-                
-                document.querySelectorAll('.check-btn').forEach(btn => {
-                    btn.classList.remove('checked');
-                    btn.textContent = 'Mark Complete';
-                });
-                
-                document.querySelectorAll('.topic-card').forEach(card => {
-                    card.classList.remove('completed');
-                });
-                
-                updateProgress();
-            }
-        });
-
-        // Print study guide
-        document.addEventListener('keydown', function(e) {
-            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
-                // Expand all before printing
-                document.querySelectorAll('.topic-content').forEach(content => {
-                    content.classList.add('open');
-                });
-                // Let browser handle print
-            }
-        });
-
-        // Highlight search terms
-        function highlightSearchTerm(term) {
-            if (!term) return;
-            
-            document.querySelectorAll('.topic-content').forEach(content => {
-                const text = content.innerHTML;
-                const regex = new RegExp(`(${term})`, 'gi');
-                content.innerHTML = text.replace(/<mark class="search-highlight">(.*?)<\/mark>/gi, '$1');
-                if (term.length > 0) {
-                    content.innerHTML = content.innerHTML.replace(regex, '<mark class="search-highlight">$1</mark>');
-                }
-            });
-        }
-
-        // Enhanced search with highlighting
-        searchInput.addEventListener('input', function(e) {
-            const searchTerm = e.target.value.toLowerCase();
-            const cards = document.querySelectorAll('.topic-card');
-            
-            // Remove previous highlights
-            document.querySelectorAll('.search-highlight').forEach(mark => {
-                mark.outerHTML = mark.innerHTML;
-            });
-            
-            cards.forEach(card => {
-                const text = card.textContent.toLowerCase();
-                if (text.includes(searchTerm)) {
-                    card.classList.remove('hidden');
-                    // Auto-expand matching cards
-                    if (searchTerm.length > 0) {
-                        const content = card.querySelector('.topic-content');
-                        const icon = card.querySelector('.toggle-icon');
-                        content.classList.add('open');
-                        icon.classList.add('open');
-                    }
-                } else {
-                    card.classList.add('hidden');
-                }
-            });
         });
     </script>
 </body>
