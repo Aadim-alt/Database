@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MariaDB Database Learning Guide</title>
+    <title>MariaDB Study Guide</title>
     <style>
         * {
             margin: 0;
@@ -12,786 +12,1043 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: #1a202c;
+            background: #f7fafc;
+        }
+
+        .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .exam-banner {
+            background: #f56565;
+            color: white;
+            padding: 0.75rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            position: sticky;
+            top: 0;
+            height: 4px;
+            background: #e2e8f0;
+            z-index: 1000;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .search-box {
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
-        }
-
-        header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-
-        header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        header p {
-            font-size: 1.1em;
-            opacity: 0.95;
-        }
-
-        .exam-alert {
-            background: #ff6b6b;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.1em;
-        }
-
-        nav {
-            background: #f8f9fa;
-            padding: 15px;
-            border-bottom: 2px solid #e9ecef;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
             position: sticky;
-            top: 0;
+            top: 4px;
             z-index: 100;
-            overflow-x: auto;
         }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #667eea;
-            padding: 8px 15px;
-            border-radius: 5px;
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
             transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .topic-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+        }
+
+        .topic-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+            transform: translateY(-2px);
+        }
+
+        .topic-card.completed {
+            border-left-color: #48bb78;
+        }
+
+        .topic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .topic-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .topic-icon {
+            font-size: 1.5rem;
+        }
+
+        .toggle-icon {
+            font-size: 1.5rem;
+            color: #a0aec0;
+            transition: transform 0.3s;
+        }
+
+        .toggle-icon.open {
+            transform: rotate(180deg);
+        }
+
+        .topic-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .topic-content.open {
+            max-height: 5000px;
+            margin-top: 1rem;
+        }
+
+        .check-btn {
+            background: #e2e8f0;
+            border: 2px solid #cbd5e0;
+            color: #4a5568;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
             font-weight: 500;
-            white-space: nowrap;
+            transition: all 0.3s;
+            font-size: 0.875rem;
         }
 
-        nav a:hover {
-            background: #667eea;
+        .check-btn:hover {
+            background: #cbd5e0;
+        }
+
+        .check-btn.checked {
+            background: #48bb78;
+            border-color: #48bb78;
             color: white;
-        }
-
-        .content {
-            padding: 30px;
-        }
-
-        section {
-            margin-bottom: 40px;
-            scroll-margin-top: 80px;
-        }
-
-        h2 {
-            color: #667eea;
-            font-size: 1.8em;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #667eea;
-        }
-
-        h3 {
-            color: #764ba2;
-            font-size: 1.4em;
-            margin: 20px 0 10px 0;
         }
 
         .code-block {
-            background: #282c34;
-            color: #abb2bf;
-            padding: 20px;
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1rem;
             border-radius: 8px;
             overflow-x: auto;
-            margin: 15px 0;
+            margin: 1rem 0;
             font-family: 'Courier New', monospace;
-            font-size: 0.95em;
-            line-height: 1.5;
+            font-size: 0.9rem;
+            line-height: 1.6;
         }
 
         .code-block code {
-            color: #61dafb;
+            color: #68d391;
         }
 
-        .important {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 5px;
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid;
         }
 
-        .note {
-            background: #d1ecf1;
-            border-left: 4px solid #17a2b8;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 5px;
+        .alert-warning {
+            background: #fef5e7;
+            border-color: #f59e0b;
+            color: #92400e;
         }
 
-        .tip {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 5px;
+        .alert-info {
+            background: #dbeafe;
+            border-color: #3b82f6;
+            color: #1e3a8a;
         }
 
-        .warning {
-            background: #f8d7da;
-            border-left: 4px solid #dc3545;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 5px;
+        .alert-success {
+            background: #d1fae5;
+            border-color: #10b981;
+            color: #065f46;
         }
 
-        table {
+        .alert-danger {
+            background: #fee2e2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+
+        .comparison-table {
             width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin: 1rem 0;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-
-        th {
+        .comparison-table th {
             background: #667eea;
             color: white;
-            font-weight: bold;
+            padding: 0.75rem;
+            text-align: left;
+            font-weight: 600;
         }
 
-        tr:nth-child(even) {
-            background: #f8f9fa;
+        .comparison-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #e2e8f0;
         }
 
-        .mistake {
-            color: #dc3545;
-            font-weight: bold;
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f7fafc;
+        }
+
+        .incorrect {
+            color: #e53e3e;
+            font-family: monospace;
         }
 
         .correct {
-            color: #28a745;
+            color: #38a169;
+            font-family: monospace;
+        }
+
+        .key-point {
+            display: flex;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .key-point::before {
+            content: "→";
+            color: #667eea;
             font-weight: bold;
         }
 
-        ul {
-            margin-left: 20px;
-            margin-top: 10px;
+        .stats-bar {
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
         }
 
-        li {
-            margin: 8px 0;
+        .stat {
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: #718096;
+            margin-top: 0.25rem;
+        }
+
+        .hidden {
+            display: none;
         }
 
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
+            .container {
+                padding: 1rem;
             }
 
-            header h1 {
-                font-size: 1.8em;
+            .topic-title {
+                font-size: 1.1rem;
             }
 
-            header p {
-                font-size: 0.95em;
-            }
-
-            .content {
-                padding: 20px;
-            }
-
-            h2 {
-                font-size: 1.5em;
-            }
-
-            h3 {
-                font-size: 1.2em;
-            }
-
-            nav ul {
-                justify-content: flex-start;
+            .stats-bar {
+                flex-direction: column;
+                gap: 1rem;
             }
 
             .code-block {
-                font-size: 0.85em;
-                padding: 15px;
-            }
-
-            table {
-                font-size: 0.9em;
+                font-size: 0.8rem;
             }
         }
 
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #667eea;
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            font-size: 1.5em;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            transition: all 0.3s;
-        }
-
-        .back-to-top:hover {
-            background: #764ba2;
-            transform: translateY(-5px);
+        .highlight {
+            background: #fef3c7;
+            padding: 0 0.25rem;
+            border-radius: 3px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>📚 MariaDB Database Learning Guide</h1>
-            <p>Complete Reference for Database Operations & SQL</p>
-        </header>
+    <div class="header">
+        <h1>📚 MariaDB Study Guide</h1>
+        <p>Master Database Operations & SQL</p>
+    </div>
 
-        <div class="exam-alert">
-            🎯 Quick Reference Guide for Your Exam - Good Luck!
+    <div class="exam-banner">
+        🎯 Exam Preparation Mode - Track Your Progress!
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="container">
+        <div class="search-box">
+            <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search topics... (e.g., 'JOIN', 'PRIMARY KEY', 'UPDATE')">
         </div>
 
-        <nav>
-            <ul>
-                <li><a href="#database">Database</a></li>
-                <li><a href="#tables">Tables</a></li>
-                <li><a href="#data">Data Operations</a></li>
-                <li><a href="#constraints">Constraints</a></li>
-                <li><a href="#joins">Joins</a></li>
-                <li><a href="#datetime">Date/Time</a></li>
-                <li><a href="#mistakes">Common Mistakes</a></li>
-                <li><a href="#summary">Summary</a></li>
-            </ul>
-        </nav>
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-number" id="completedCount">0</div>
+                <div class="stat-label">Completed</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" id="totalCount">9</div>
+                <div class="stat-label">Total Topics</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" id="percentComplete">0%</div>
+                <div class="stat-label">Progress</div>
+            </div>
+        </div>
 
-        <div class="content">
-            <section id="database">
-                <h2>1. Database Operations</h2>
-                
-                <h3>Creating a Database</h3>
-                <div class="code-block">
-CREATE DATABASE Build_And_Ship;
+        <div id="topicsContainer">
+            <!-- Topic 1: Database Operations -->
+            <div class="topic-card" data-topic="database">
+                <div class="topic-header">
+                    <div class="topic-title">
+                        <span class="topic-icon">🗄️</span>
+                        <span>Database Operations</span>
+                    </div>
+                    <div>
+                        <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
+                        <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
+                    </div>
                 </div>
+                <div class="topic-content">
+                    <h3>Creating a Database</h3>
+                    <div class="code-block">CREATE DATABASE Build_And_Ship;</div>
 
-                <h3>Using a Database</h3>
-                <div class="code-block">
-USE Build_And_Ship;
+                    <h3>Using a Database</h3>
+                    <div class="code-block">USE Build_And_Ship;</div>
+
+                    <div class="alert alert-warning">
+                        <strong>⚠️ Common Mistake:</strong>
+                        <div class="key-point">Use <span class="correct">USE database_name</span>, NOT <span class="incorrect">USE database database_name</span></div>
+                    </div>
                 </div>
+            </div>
 
-                <div class="important">
-                    <strong>⚠️ Important:</strong> Use <code>USE database_name</code> (not <code>USE database database_name</code>)
+            <!-- Topic 2: Table Operations -->
+            <div class="topic-card" data-topic="tables">
+                <div class="topic-header">
+                    <div class="topic-title">
+                        <span class="topic-icon">📋</span>
+                        <span>Creating & Modifying Tables</span>
+                    </div>
+                    <div>
+                        <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
+                        <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
+                    </div>
                 </div>
-            </section>
-
-            <section id="tables">
-                <h2>2. Table Creation & Structure</h2>
-                
-                <h3>Basic Table Creation</h3>
-                <div class="code-block">
-CREATE TABLE Members (
+                <div class="topic-content">
+                    <h3>Create Table</h3>
+                    <div class="code-block">CREATE TABLE Members (
     Name VARCHAR(100),
     Post VARCHAR(200),
     Member_ID INT
-);
-                </div>
+);</div>
 
-                <div class="note">
-                    <strong>📝 Key Points:</strong>
-                    <ul>
-                        <li>Table must have at least one column</li>
-                        <li>Each column needs a data type</li>
-                        <li>No trailing comma after last column</li>
-                    </ul>
-                </div>
+                    <div class="alert alert-info">
+                        <strong>📝 Remember:</strong>
+                        <div class="key-point">Every table needs at least one column</div>
+                        <div class="key-point">Each column must have a data type</div>
+                        <div class="key-point">No comma after the last column</div>
+                        <div class="key-point">Table names are case-sensitive!</div>
+                    </div>
 
-                <h3>View Table Structure</h3>
-                <div class="code-block">
-DESC Members;
-                </div>
+                    <h3>View Table</h3>
+                    <div class="code-block">DESC Members;  -- Show structure
+SELECT * FROM Members;  -- Show data</div>
 
-                <h3>View Table Data</h3>
-                <div class="code-block">
-SELECT * FROM Members;
-                </div>
-
-                <div class="warning">
-                    <strong>⚠️ Important:</strong> Table names are case-sensitive in MariaDB
-                </div>
-
-                <h3>Modifying Table Structure (ALTER TABLE)</h3>
-                
-                <h4>Reordering Columns</h4>
-                <div class="code-block">
+                    <h3>Modify Table Structure</h3>
+                    <div class="code-block">-- Reorder column
 ALTER TABLE Members 
 MODIFY COLUMN Member_ID INT FIRST;
-                </div>
 
-                <h4>Renaming Columns</h4>
-                <div class="code-block">
+-- Rename column
 ALTER TABLE Members 
 CHANGE Post Position VARCHAR(200);
-                </div>
 
-                <h4>Adding Columns</h4>
-                <div class="code-block">
--- Add column at the end
+-- Add column
 ALTER TABLE Members 
-ADD COLUMN Donation INT;
-
--- Add column after specific column
-ALTER TABLE Members 
-ADD COLUMN Monthly_Donation INT AFTER Position;
+ADD COLUMN Donation INT AFTER Position;</div>
                 </div>
-            </section>
+            </div>
 
-            <section id="data">
-                <h2>3. Data Operations</h2>
-                
-                <h3>Inserting Data</h3>
-                
-                <h4>Insert Multiple Rows</h4>
-                <div class="code-block">
-INSERT INTO Members
-VALUES
-(1, "Aadim Dhakal", "Main Lead"),
-(2, "Samriddha Pant", "Vice Lead"),
-(3, "Chandan Shah", "Tech Lead"),
-(4, "Abhas Shakya", "Member");
+            <!-- Topic 3: Data Operations -->
+            <div class="topic-card" data-topic="data-operations">
+                <div class="topic-header">
+                    <div class="topic-title">
+                        <span class="topic-icon">✏️</span>
+                        <span>Insert, Update & Delete Data</span>
+                    </div>
+                    <div>
+                        <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
+                        <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
+                    </div>
                 </div>
+                <div class="topic-content">
+                    <h3>Insert Data</h3>
+                    <div class="code-block">-- Insert multiple rows
+INSERT INTO Members VALUES
+(1, "Aadim", "Lead"),
+(2, "Samriddha", "Vice Lead");
 
-                <h4>Insert Specific Columns</h4>
-                <div class="code-block">
+-- Insert specific columns only
 INSERT INTO Customers(Customer_Name)
-VALUES
-("Aadim"),
-("Palpasa"),
-("Shine");
-                </div>
+VALUES ("Aadim"), ("Palpasa");</div>
 
-                <h3>Updating Data</h3>
-                
-                <h4>Update Single Row</h4>
-                <div class="code-block">
+                    <h3>Update Data</h3>
+                    <div class="code-block">-- Update one row
 UPDATE Members
 SET Donation = 500
 WHERE Member_ID = 1;
-                </div>
 
-                <h4>Update All Rows</h4>
-                <div class="code-block">
+-- Update all rows
 UPDATE Members
-SET Monthly_Donation = 500;
-                </div>
+SET Monthly_Donation = 500;</div>
 
-                <div class="important">
-                    <strong>⚠️ Important:</strong> Don't use <code>UPDATE table table_name</code> - just <code>UPDATE table_name</code>
-                </div>
+                    <div class="alert alert-warning">
+                        <strong>⚠️ Warning:</strong> Always use WHERE clause to avoid updating ALL rows!
+                    </div>
 
-                <h3>Deleting Data</h3>
-                
-                <h4>Delete Single Row</h4>
-                <div class="code-block">
+                    <h3>Delete Data</h3>
+                    <div class="code-block">-- Delete specific row
 DELETE FROM Members
 WHERE Member_ID = 4;
-                </div>
 
-                <h4>Delete All Rows</h4>
-                <div class="code-block">
-DELETE FROM Members;
-                </div>
+-- Delete all rows
+DELETE FROM Members;</div>
 
-                <div class="warning">
-                    <strong>⚠️ Warning:</strong> Always use WHERE clause when deleting to avoid removing all data!
-                </div>
+                    <div class="alert alert-danger">
+                        <strong>🚨 Critical:</strong> DELETE without WHERE removes ALL data!
+                    </div>
 
-                <h3>Working with NULL Values</h3>
-                
-                <div class="warning">
-                    <strong>❌ Incorrect Way:</strong>
-                    <div class="code-block">
-SELECT * FROM Members 
-WHERE Total_Donation = NULL;  -- Returns empty set
+                    <h3>Working with NULL</h3>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Incorrect ❌</th>
+                            <th>Correct ✅</th>
+                        </tr>
+                        <tr>
+                            <td class="incorrect">WHERE column = NULL</td>
+                            <td class="correct">WHERE column IS NULL</td>
+                        </tr>
+                        <tr>
+                            <td class="incorrect">WHERE column != NULL</td>
+                            <td class="correct">WHERE column IS NOT NULL</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Topic 4: Constraints -->
+            <div class="topic-card" data-topic="constraints">
+                <div class="topic-header">
+                    <div class="topic-title">
+                        <span class="topic-icon">🔒</span>
+                        <span>Constraints & Data Integrity</span>
+                    </div>
+                    <div>
+                        <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
+                        <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
                     </div>
                 </div>
-
-                <div class="tip">
-                    <strong>✅ Correct Way:</strong>
-                    <div class="code-block">
-SELECT * FROM Members 
-WHERE Total_Donation IS NULL;
-                    </div>
-                </div>
-            </section>
-
-            <section id="datetime">
-                <h2>4. Date and Time Functions</h2>
-                
-                <h3>Date/Time Data Types</h3>
-                <div class="code-block">
-CREATE TABLE test (
-    my_date DATE,
-    my_time TIME,
-    my_datetime DATETIME
-);
-                </div>
-
-                <h3>Built-in Functions</h3>
-                <div class="code-block">
-INSERT INTO test
-VALUES
-(CURRENT_DATE(), CURRENT_TIME(), NOW());
-                </div>
-
-                <div class="note">
-                    <strong>📝 Result Example:</strong>
-                    <ul>
-                        <li>Date: 2026-01-02</li>
-                        <li>Time: 07:12:12</li>
-                        <li>DateTime: 2026-01-02 07:12:12</li>
-                    </ul>
-                </div>
-            </section>
-
-            <section id="constraints">
-                <h2>5. Constraints</h2>
-                
-                <h3>UNIQUE Constraint</h3>
-                <div class="code-block">
-ALTER TABLE Members
-ADD CONSTRAINT UNIQUE(Member_ID);
-                </div>
-
-                <h3>PRIMARY KEY Constraint</h3>
-                <div class="code-block">
--- Method 1: During table creation
+                <div class="topic-content">
+                    <h3>PRIMARY KEY</h3>
+                    <div class="code-block">-- During creation
 CREATE TABLE Theatre (
     Movie_ID INT PRIMARY KEY AUTO_INCREMENT,
     Movie_Name VARCHAR(100)
 );
 
--- Method 2: After table creation
+-- After creation
 ALTER TABLE Members
-ADD CONSTRAINT PRIMARY KEY(Member_ID);
-                </div>
+ADD CONSTRAINT PRIMARY KEY(Member_ID);</div>
 
-                <h3>NOT NULL Constraint</h3>
-                <div class="code-block">
+                    <h3>FOREIGN KEY</h3>
+                    <div class="code-block">ALTER TABLE transactions
+ADD CONSTRAINT fk_member
+FOREIGN KEY(Member_ID)
+REFERENCES Members(Member_ID);</div>
+
+                    <div class="alert alert-warning">
+                        <strong>Remember:</strong> Use <span class="highlight">REFERENCES</span> (with 'S'), not 'reference'
+                    </div>
+
+                    <h3>Other Constraints</h3>
+                    <div class="code-block">-- UNIQUE
+ALTER TABLE Members
+ADD CONSTRAINT UNIQUE(Member_ID);
+
+-- NOT NULL
 ALTER TABLE Members
 MODIFY Name VARCHAR(100) NOT NULL;
-                </div>
 
-                <h3>CHECK Constraint</h3>
-                <div class="code-block">
+-- CHECK
 ALTER TABLE Members
 ADD CONSTRAINT chk_donation
 CHECK(Monthly_Donation > 50);
-                </div>
 
-                <h3>DEFAULT Constraint</h3>
-                <div class="code-block">
+-- DEFAULT
 ALTER TABLE Members
-ALTER Total_Donation SET DEFAULT 0;
-                </div>
+ALTER Total_Donation SET DEFAULT 0;</div>
 
-                <h3>FOREIGN KEY Constraint</h3>
-                <div class="code-block">
-ALTER TABLE transactions
-ADD CONSTRAINT transaction_fk
-FOREIGN KEY(Member_ID)
-REFERENCES Members(Member_ID);
-                </div>
-
-                <div class="important">
-                    <strong>⚠️ Important Notes:</strong>
-                    <ul>
-                        <li>AUTO_INCREMENT requires the column to be a PRIMARY KEY or UNIQUE</li>
-                        <li>Foreign key must reference a PRIMARY KEY or UNIQUE column in parent table</li>
-                    </ul>
-                </div>
-
-                <h3>AUTO_INCREMENT</h3>
-                <div class="code-block">
--- First make it a primary key
+                    <h3>AUTO_INCREMENT</h3>
+                    <div class="code-block">-- Must be PRIMARY KEY or UNIQUE first
 ALTER TABLE Customers
 ADD CONSTRAINT PRIMARY KEY(Customer_ID);
 
 -- Then add auto_increment
 ALTER TABLE Customers
 MODIFY Customer_ID INT AUTO_INCREMENT;
-                </div>
 
-                <div class="tip">
-                    <strong>✅ Benefit:</strong> No need to specify ID when inserting - it auto-generates
-                </div>
-
-                <h3>Setting AUTO_INCREMENT Value</h3>
-                
-                <h4>Set Starting Value</h4>
-                <div class="code-block">
--- Set AUTO_INCREMENT to start from 100
+-- Set starting value
 ALTER TABLE Customers
 AUTO_INCREMENT = 100;
-                </div>
 
-                <h4>Reset AUTO_INCREMENT</h4>
-                <div class="code-block">
--- Reset to start from 1
+-- Reset to 1
 ALTER TABLE Customers
-AUTO_INCREMENT = 1;
-                </div>
+AUTO_INCREMENT = 1;</div>
 
-                <div class="note">
-                    <strong>📝 When to use:</strong>
-                    <ul>
-                        <li>After deleting rows to reset the counter</li>
-                        <li>To set a specific starting number for IDs</li>
-                        <li>To maintain sequential ID numbering</li>
-                    </ul>
+                    <div class="alert alert-success">
+                        <strong>💡 Benefit:</strong> No need to specify ID when inserting - it auto-generates!
+                    </div>
                 </div>
-            </section>
+            </div>
 
-            <section id="joins">
-                <h2>6. Table Joins</h2>
-                
-                <h3>INNER JOIN</h3>
-                <div class="code-block">
-SELECT * FROM transactions
+            <!-- Topic 5: Joins -->
+            <div class="topic-card" data-topic="joins">
+                <div class="topic-header">
+                    <div class="topic-title">
+                        <span class="topic-icon">🔗</span>
+                        <span>Table Joins</span>
+                    </div>
+                    <div>
+                        <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
+                        <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <h3>INNER JOIN</h3>
+                    <div class="code-block">SELECT * FROM transactions
 INNER JOIN Members
-ON transactions.Member_ID = Members.Member_ID;
-                </div>
+ON transactions.Member_ID = Members.Member_ID;</div>
+                    <div class="alert alert-info">
+                        <strong>📌 Returns:</strong> Only matching records from BOTH tables
+                    </div>
 
-                <div class="note">
-                    <strong>📝 What it does:</strong> Returns only matching records from both tables
-                </div>
-
-                <h3>LEFT JOIN (LEFT OUTER JOIN)</h3>
-                <div class="code-block">
-SELECT * FROM Members
+                    <h3>LEFT JOIN</h3>
+                    <div class="code-block">SELECT * FROM Members
 LEFT JOIN transactions
-ON Members.Member_ID = transactions.Member_ID;
-                </div>
+ON Members.Member_ID = transactions.Member_ID;</div>
+                    <div class="alert alert-info">
+                        <strong>📌 Returns:</strong> ALL from left table + matching from right (NULL if no match)
+                    </div>
 
-                <div class="note">
-                    <strong>📝 What it does:</strong> Returns all records from the left table (Members), and matching records from the right table. If no match, NULL values are shown for right table columns.
-                </div>
-
-                <h3>RIGHT JOIN (RIGHT OUTER JOIN)</h3>
-                <div class="code-block">
-SELECT * FROM transactions
+                    <h3>RIGHT JOIN</h3>
+                    <div class="code-block">SELECT * FROM transactions
 RIGHT JOIN Members
-ON transactions.Member_ID = Members.Member_ID;
+ON transactions.Member_ID = Members.Member_ID;</div>
+                    <div class="alert alert-info">
+                        <strong>📌 Returns:</strong> ALL from right table + matching from left (NULL if no match)
+                    </div>
+
+                    <h3>Quick Comparison</h3>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Join Type</th>
+                            <th>When to Use</th>
+                        </tr>
+                        <tr>
+                            <td><strong>INNER JOIN</strong></td>
+                            <td>Only want records that exist in both tables</td>
+                        </tr>
+                        <tr>
+                            <td><strong>LEFT JOIN</strong></td>
+                            <td>Want all from first table, even if no match</td>
+                        </tr>
+                        <tr>
+                            <td><strong>RIGHT JOIN</strong></td>
+                            <td>Want all from second table, even if no match</td>
+                        </tr>
+                    </table>
                 </div>
+            </div>
 
-                <div class="note">
-                    <strong>📝 What it does:</strong> Returns all records from the right table (Members), and matching records from the left table. If no match, NULL values are shown for left table columns.
+            <!-- Topic 6: Date/Time -->
+            <div class="topic-card" data-topic="datetime">
+                <div class="topic-header">
+                    <div class="topic-title">
+                        <span class="topic-icon">📅</span>
+                        <span>Date & Time Functions</span>
+                    </div>
+                    <div>
+                        <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
+                        <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
+                    </div>
                 </div>
+                <div class="topic-content">
+                    <h3>Data Types</h3>
+                    <div class="code-block">CREATE TABLE test (
+    my_date DATE,           -- YYYY-MM-DD
+    my_time TIME,           -- HH:MM:SS
+    my_datetime DATETIME    -- YYYY-MM-DD HH:MM:SS
+);</div>
 
-                <h3>Selecting Specific Columns from Join</h3>
-                <div class="code-block">
-SELECT Transaction_ID, Transaction_Amount, Name, Email
-FROM transactions
-INNER JOIN Members
-ON transactions.Member_ID = Members.Member_ID;
+                    <h3>Built-in Functions</h3>
+                    <div class="code-block">INSERT INTO test VALUES
+(CURRENT_DATE(), CURRENT_TIME(), NOW());
+
+-- Example output:
+-- 2026-01-02 | 07:12:12 | 2026-01-02 07:12:12</div>
                 </div>
+            </div>
 
-                <div class="important">
-                    <strong>⚠️ Important:</strong> Use correct table names in ON clause (e.g., <code>Customers.Customer_ID</code>, not <code>Customer.Customer_ID</code>)
+            <!-- Topic 7: Transactions -->
+            <div class="topic-card" data-topic="transactions">
+                <div class="topic-header">
+                    <div class="topic-title">
+                        <span class="topic-icon">💾</span>
+                        <span>Transaction Control</span>
+                    </div>
+                    <div>
+                        <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
+                        <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
+                    </div>
                 </div>
-
-                <h3>JOIN Types Comparison</h3>
-                <table>
-                    <tr>
-                        <th>Join Type</th>
-                        <th>Description</th>
-                        <th>Use Case</th>
-                    </tr>
-                    <tr>
-                        <td><strong>INNER JOIN</strong></td>
-                        <td>Returns only matching records from both tables</td>
-                        <td>When you want only records that exist in both tables</td>
-                    </tr>
-                    <tr>
-                        <td><strong>LEFT JOIN</strong></td>
-                        <td>Returns all from left table + matching from right</td>
-                        <td>When you want all records from first table regardless of match</td>
-                    </tr>
-                    <tr>
-                        <td><strong>RIGHT JOIN</strong></td>
-                        <td>Returns all from right table + matching from left</td>
-                        <td>When you want all records from second table regardless of match</td>
-                    </tr>
-                </table>
-            </section>
-
-            <section id="transactions">
-                <h2>7. Transaction Control</h2>
-                
-                <h3>Disable Auto-commit</h3>
-                <div class="code-block">
+                <div class="topic-content">
+                    <div class="code-block">-- Disable auto-commit
 SET AUTOCOMMIT = OFF;
-                </div>
 
-                <h3>Commit Changes</h3>
-                <div class="code-block">
+-- Make your changes...
+
+-- Save changes
 COMMIT;
+
+-- Or undo changes
+ROLLBACK;</div>
+
+                    <div class="alert alert-success">
+                        <strong>💡 Use Case:</strong> Protect critical operations from mistakes
+                    </div>
                 </div>
-            </section>
+            </div>
 
-            <section id="mistakes">
-                <h2>8. Common Mistakes & Lessons Learned</h2>
-                
-                <table>
-                    <tr>
-                        <th>Category</th>
-                        <th>Incorrect ❌</th>
-                        <th>Correct ✅</th>
-                    </tr>
-                    <tr>
-                        <td>USE Command</td>
-                        <td class="mistake">USE database Build_And_Ship</td>
-                        <td class="correct">USE Build_And_Ship</td>
-                    </tr>
-                    <tr>
-                        <td>Table Names</td>
-                        <td class="mistake">SELECT * FROM members</td>
-                        <td class="correct">SELECT * FROM Members</td>
-                    </tr>
-                    <tr>
-                        <td>UPDATE Syntax</td>
-                        <td class="mistake">UPDATE table Members SET...</td>
-                        <td class="correct">UPDATE Members SET...</td>
-                    </tr>
-                    <tr>
-                        <td>NULL Comparison</td>
-                        <td class="mistake">WHERE column = NULL</td>
-                        <td class="correct">WHERE column IS NULL</td>
-                    </tr>
-                    <tr>
-                        <td>FOREIGN KEY</td>
-                        <td class="mistake">FOREIGN KEY(col) reference table(col)</td>
-                        <td class="correct">FOREIGN KEY(col) references table(col)</td>
-                    </tr>
-                </table>
-
-                <div class="tip">
-                    <strong>🎯 Best Practices:</strong>
-                    <ul>
-                        <li>Use consistent naming conventions (PascalCase or snake_case)</li>
-                        <li>Always specify column data types when creating tables</li>
-                        <li>Use WHERE clause carefully when updating to avoid unintended changes</li>
-                        <li>Set PRIMARY KEY for every table</li>
-                        <li>Use FOREIGN KEY to maintain referential integrity</li>
-                        <li>Add constraints to ensure data quality</li>
-                        <li>Test queries before executing on production data</li>
-                        <li>Use transactions for critical operations</li>
-                    </ul>
+            <!-- Topic 8: Common Mistakes -->
+            <div class="topic-card" data-topic="mistakes">
+                <div class="topic-header">
+                    <div class="topic-title">
+                        <span class="topic-icon">⚠️</span>
+                        <span>Common Mistakes to Avoid</span>
+                    </div>
+                    <div>
+                        <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
+                        <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
+                    </div>
                 </div>
-            </section>
+                <div class="topic-content">
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Mistake ❌</th>
+                            <th>Correct ✅</th>
+                        </tr>
+                        <tr>
+                            <td class="incorrect">USE database Build_And_Ship</td>
+                            <td class="correct">USE Build_And_Ship</td>
+                        </tr>
+                        <tr>
+                            <td class="incorrect">UPDATE table Members SET...</td>
+                            <td class="correct">UPDATE Members SET...</td>
+                        </tr>
+                        <tr>
+                            <td class="incorrect">WHERE column = NULL</td>
+                            <td class="correct">WHERE column IS NULL</td>
+                        </tr>
+                        <tr>
+                            <td class="incorrect">FOREIGN KEY(col) reference...</td>
+                            <td class="correct">FOREIGN KEY(col) REFERENCES...</td>
+                        </tr>
+                        <tr>
+                            <td class="incorrect">SELECT * FROM members</td>
+                            <td class="correct">SELECT * FROM Members</td>
+                        </tr>
+                    </table>
 
-            <section id="summary">
-                <h2>9. Summary of Commands Learned</h2>
-                
-                <table>
-                    <tr>
-                        <th>Category</th>
-                        <th>Commands</th>
-                    </tr>
-                    <tr>
-                        <td><strong>Database</strong></td>
-                        <td>CREATE DATABASE, USE</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Table</strong></td>
-                        <td>CREATE TABLE, DROP TABLE, DESC</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Data</strong></td>
-                        <td>INSERT INTO, UPDATE, SELECT, DELETE</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Structure</strong></td>
-                        <td>ALTER TABLE (ADD, MODIFY, CHANGE)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Constraints</strong></td>
-                        <td>PRIMARY KEY, FOREIGN KEY, UNIQUE, NOT NULL, CHECK, DEFAULT</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Joins</strong></td>
-                        <td>INNER JOIN, LEFT JOIN, RIGHT JOIN</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Functions</strong></td>
-                        <td>CURRENT_DATE(), CURRENT_TIME(), NOW()</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Transaction</strong></td>
-                        <td>SET AUTOCOMMIT, COMMIT</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Features</strong></td>
-                        <td>AUTO_INCREMENT</td>
-                    </tr>
-                </table>
-
-                <div class="tip" style="margin-top: 30px; text-align: center; font-size: 1.2em;">
-                    <strong>🎓 Good Luck on Your Exam!</strong><br>
-                    Remember: Practice makes perfect. Review the common mistakes section before your exam!
+                    <div class="alert alert-success">
+                        <strong>🎯 Best Practices:</strong>
+                        <div class="key-point">Always use WHERE with UPDATE/DELETE</div>
+                        <div class="key-point">Set PRIMARY KEY for every table</div>
+                        <div class="key-point">Use FOREIGN KEY for referential integrity</div>
+                        <div class="key-point">Test queries before running on real data</div>
+                        <div class="key-point">Match table name capitalization exactly</div>
+                    </div>
                 </div>
-            </section>
+            </div>
+
+            <!-- Topic 9: Quick Reference -->
+            <div class="topic-card" data-topic="reference">
+                <div class="topic-header">
+                    <div class="topic-title">
+                        <span class="topic-icon">📖</span>
+                        <span>Quick Reference Cheat Sheet</span>
+                    </div>
+                    <div>
+                        <button class="check-btn" onclick="toggleComplete(this)">Mark Complete</button>
+                        <span class="toggle-icon" onclick="toggleTopic(this)">▼</span>
+                    </div>
+                </div>
+                <div class="topic-content">
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Category</th>
+                            <th>Key Commands</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Database</strong></td>
+                            <td>CREATE DATABASE, USE</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tables</strong></td>
+                            <td>CREATE TABLE, ALTER TABLE, DESC</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Data</strong></td>
+                            <td>INSERT, UPDATE, DELETE, SELECT</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Constraints</strong></td>
+                            <td>PRIMARY KEY, FOREIGN KEY, UNIQUE, NOT NULL, CHECK, DEFAULT</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Joins</strong></td>
+                            <td>INNER JOIN, LEFT JOIN, RIGHT JOIN</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Functions</strong></td>
+                            <td>CURRENT_DATE(), CURRENT_TIME(), NOW()</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Transaction</strong></td>
+                            <td>SET AUTOCOMMIT, COMMIT, ROLLBACK</td>
+                        </tr>
+                    </table>
+
+                    <div class="alert alert-success" style="text-align: center; font-size: 1.1rem; margin-top: 2rem;">
+                        <strong>🎓 You've Got This!</strong><br>
+                        Review your completed topics and practice the examples. Good luck on your exam! 🌟
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <a href="#" class="back-to-top">↑</a>
-
     <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+        // Progress tracking
+        let completedTopics = new Set();
+        const totalTopics = document.querySelectorAll('.topic-card').length;
+
+        function updateProgress() {
+            const completed = completedTopics.size;
+            const percent = Math.round((completed / totalTopics) * 100);
+            
+            document.getElementById('completedCount').textContent = completed;
+            document.getElementById('percentComplete').textContent = percent + '%';
+            document.getElementById('progressFill').style.width = percent + '%';
+            
+            // Save to localStorage
+            localStorage.setItem('mariadb_completed', JSON.stringify([...completedTopics]));
+        }
+
+        function toggleComplete(btn) {
+            const card = btn.closest('.topic-card');
+            const topic = card.dataset.topic;
+            
+            if (completedTopics.has(topic)) {
+                completedTopics.delete(topic);
+                btn.classList.remove('checked');
+                btn.textContent = 'Mark Complete';
+                card.classList.remove('completed');
+            } else {
+                completedTopics.add(topic);
+                btn.classList.add('checked');
+                btn.textContent = '✓ Completed';
+                card.classList.add('completed');
+            }
+            
+            updateProgress();
+        }
+
+        function toggleTopic(icon) {
+            const content = icon.closest('.topic-card').querySelector('.topic-content');
+            content.classList.toggle('open');
+            icon.classList.toggle('open');
+        }
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.topic-card');
+            
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
                 }
             });
         });
 
-        // Show/hide back to top button
-        const backToTop = document.querySelector('.back-to-top');
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTop.style.display = 'flex';
-            } else {
-                backToTop.style.display = 'none';
+        // Smooth scroll progress
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            
+            // Only update if not searching
+            if (!searchInput.value) {
+                document.getElementById('progressFill').style.width = scrollPercent + '%';
             }
+        });
+
+        // Load saved progress
+        window.addEventListener('load', function() {
+            const saved = localStorage.getItem('mariadb_completed');
+            if (saved) {
+                completedTopics = new Set(JSON.parse(saved));
+                completedTopics.forEach(topic => {
+                    const card = document.querySelector(`[data-topic="${topic}"]`);
+                    if (card) {
+                        const btn = card.querySelector('.check-btn');
+                        btn.classList.add('checked');
+                        btn.textContent = '✓ Completed';
+                        card.classList.add('completed');
+                    }
+                });
+                updateProgress();
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === '/' && e.target !== searchInput) {
+                e.preventDefault();
+                searchInput.focus();
+            }
+            // Escape to clear search
+            if (e.key === 'Escape' && e.target === searchInput) {
+                searchInput.value = '';
+                searchInput.dispatchEvent(new Event('input'));
+                searchInput.blur();
+            }
+        });
+
+        // Expand all / Collapse all functionality
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + E to expand all
+            if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
+                e.preventDefault();
+                document.querySelectorAll('.topic-content').forEach(content => {
+                    content.classList.add('open');
+                });
+                document.querySelectorAll('.toggle-icon').forEach(icon => {
+                    icon.classList.add('open');
+                });
+            }
+            // Ctrl/Cmd + C to collapse all
+            if ((e.ctrlKey || e.metaKey) && e.key === 'c') {
+                e.preventDefault();
+                document.querySelectorAll('.topic-content').forEach(content => {
+                    content.classList.remove('open');
+                });
+                document.querySelectorAll('.toggle-icon').forEach(icon => {
+                    icon.classList.remove('open');
+                });
+            }
+        });
+
+        // Click topic title to toggle
+        document.querySelectorAll('.topic-title').forEach(title => {
+            title.style.cursor = 'pointer';
+            title.addEventListener('click', function() {
+                const icon = this.closest('.topic-header').querySelector('.toggle-icon');
+                toggleTopic(icon);
+            });
+        });
+
+        // Initialize - collapse all by default
+        document.querySelectorAll('.topic-content').forEach(content => {
+            content.classList.remove('open');
+        });
+
+        // Add "Expand All" and "Collapse All" buttons
+        const controlsDiv = document.createElement('div');
+        controlsDiv.style.cssText = 'display: flex; gap: 1rem; margin-bottom: 1rem; justify-content: center;';
+        controlsDiv.innerHTML = `
+            <button id="expandAll" style="background: #667eea; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 500;">
+                📖 Expand All
+            </button>
+            <button id="collapseAll" style="background: #764ba2; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 500;">
+                📕 Collapse All
+            </button>
+            <button id="resetProgress" style="background: #f56565; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 500;">
+                🔄 Reset Progress
+            </button>
+        `;
+        
+        const topicsContainer = document.getElementById('topicsContainer');
+        topicsContainer.parentNode.insertBefore(controlsDiv, topicsContainer);
+
+        // Expand all button
+        document.getElementById('expandAll').addEventListener('click', function() {
+            document.querySelectorAll('.topic-content').forEach(content => {
+                content.classList.add('open');
+            });
+            document.querySelectorAll('.toggle-icon').forEach(icon => {
+                icon.classList.add('open');
+            });
+        });
+
+        // Collapse all button
+        document.getElementById('collapseAll').addEventListener('click', function() {
+            document.querySelectorAll('.topic-content').forEach(content => {
+                content.classList.remove('open');
+            });
+            document.querySelectorAll('.toggle-icon').forEach(icon => {
+                icon.classList.remove('open');
+            });
+        });
+
+        // Reset progress button
+        document.getElementById('resetProgress').addEventListener('click', function() {
+            if (confirm('Are you sure you want to reset all progress? This cannot be undone.')) {
+                completedTopics.clear();
+                localStorage.removeItem('mariadb_completed');
+                
+                document.querySelectorAll('.check-btn').forEach(btn => {
+                    btn.classList.remove('checked');
+                    btn.textContent = 'Mark Complete';
+                });
+                
+                document.querySelectorAll('.topic-card').forEach(card => {
+                    card.classList.remove('completed');
+                });
+                
+                updateProgress();
+            }
+        });
+
+        // Print study guide
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                // Expand all before printing
+                document.querySelectorAll('.topic-content').forEach(content => {
+                    content.classList.add('open');
+                });
+                // Let browser handle print
+            }
+        });
+
+        // Highlight search terms
+        function highlightSearchTerm(term) {
+            if (!term) return;
+            
+            document.querySelectorAll('.topic-content').forEach(content => {
+                const text = content.innerHTML;
+                const regex = new RegExp(`(${term})`, 'gi');
+                content.innerHTML = text.replace(/<mark class="search-highlight">(.*?)<\/mark>/gi, '$1');
+                if (term.length > 0) {
+                    content.innerHTML = content.innerHTML.replace(regex, '<mark class="search-highlight">$1</mark>');
+                }
+            });
+        }
+
+        // Enhanced search with highlighting
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.topic-card');
+            
+            // Remove previous highlights
+            document.querySelectorAll('.search-highlight').forEach(mark => {
+                mark.outerHTML = mark.innerHTML;
+            });
+            
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    card.classList.remove('hidden');
+                    // Auto-expand matching cards
+                    if (searchTerm.length > 0) {
+                        const content = card.querySelector('.topic-content');
+                        const icon = card.querySelector('.toggle-icon');
+                        content.classList.add('open');
+                        icon.classList.add('open');
+                    }
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
         });
     </script>
 </body>
